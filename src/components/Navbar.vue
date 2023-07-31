@@ -10,7 +10,7 @@
     <nav class="hidden sm:block">
       <ul class="flex items-center space-x-10">
         <li class="navList"><router-link to="/">Home</router-link></li>
-        <li class="navList">About</li>
+        <li class="navList">Projects</li>
         <li class="navList">Services</li>
         <li class="navList">Contact</li>
       </ul>
@@ -25,8 +25,8 @@
   <div v-if="showMobileMenu" class="md:hidden">
     <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
       <a class="dropdownLink">Home</a>
+      <a class="dropdownLink">Projects</a>
       <a class="dropdownLink">Services</a>
-      <a class="dropdownLink">About</a>
       <a class="dropdownLink">Contact</a>
     </div>
   </div>
@@ -53,9 +53,9 @@ export default {
 .custom-active-class {
   color: #ffff;
   border: 2px solid white; /* Set the border width and color */
-  border-radius: 5px;
+
   padding: 5px;
-  border-radius: 10px;
+  border-radius: 20px;
 }
 .navFrame {
   @apply flex justify-between items-center px-10 bg-[#65451F];
