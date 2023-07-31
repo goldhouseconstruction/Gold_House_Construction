@@ -19,12 +19,12 @@
 
     <!-- For small screen -->
     <button @click="toggleMenu()" class="toggleBtn py-5">
-      <i class="fa-solid fa-bars text-white"></i>
+      <i class="fa-solid fa-bars"></i>
     </button>
   </div>
   <div v-if="showMobileMenu" class="md:hidden">
     <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-      <a class="dropdownLink">Home</a>
+      <router-link to="/" class="dropdownLink">Home</router-link>
       <a class="dropdownLink">Projects</a>
       <a class="dropdownLink">Services</a>
       <a class="dropdownLink">Contact</a>
@@ -68,7 +68,7 @@ export default {
   height: 50px;
 }
 .dropdownLink {
-  @apply text-gray-500 hover:text-gray-50 hover:bg-[#686D78] block px-3 py-2 rounded-md text-base font-medium;
+  @apply text-gray-500   block px-3 py-2 rounded-md text-base font-medium;
 }
 .toggleBtn {
   float: right;
