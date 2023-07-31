@@ -51,17 +51,17 @@ export default {
 
 <style>
 .custom-active-class {
-  color: #ffff;
-  border: 2px solid white; /* Set the border width and color */
+  color: black;
+  border: 1px solid black; /* Set the border width and color */
 
   padding: 5px;
   border-radius: 20px;
 }
 .navFrame {
-  @apply flex justify-between items-center px-10 bg-[#65451F];
+  @apply flex justify-between items-center px-10 bg-[#ffff];
 }
 .navList {
-  @apply text-white cursor-pointer;
+  @apply text-black cursor-pointer;
 }
 .logo {
   width: 90px;
