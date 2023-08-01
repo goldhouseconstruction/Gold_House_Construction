@@ -32,9 +32,11 @@
           <p class="footerLink">Contact</p>
         </div>
         <div>
-          <p class="footerHeading">Social</p>
+          <p class="footerHeading">Socials</p>
           <p class="footerSocial">
             <i class="fa-brands fa-facebook"></i>
+            <i class="fa-brands fa-instagram"></i>
+            <i class="fa-brands fa-linkedin"></i>
           </p>
         </div>
       </div>
@@ -60,9 +62,12 @@ export default {};
   @apply text-[#7D868E] mb-2;
 }
 .footerLink {
-  @apply text-[#ffff] hover:text-blue-500 mb-2;
+  @apply text-[#0177FA] mb-2;
 }
 .footerSocial {
   @apply text-[#ffff];
+}
+.footerSocial i {
+  @apply px-1;
 }
 </style>
