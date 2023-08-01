@@ -1,5 +1,5 @@
 <template>
-  <div class="heroBg">
+  <div class="hero">
     <h1>Excellence in Engineering, Commitment to Quality</h1>
 
     <p>"Building the Future, Together"</p>
@@ -11,8 +11,8 @@
 <script>
 export default {};
 </script>
-<style>
-.heroBg {
+<style scoped>
+.hero {
   background-image: url("../../public/img/hero3.jpg");
   background-size: cover;
   background-repeat: no-repeat;
@@ -24,17 +24,18 @@ export default {};
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
 }
-.heroBg h1 {
+.hero h1 {
   font-size: 30px;
   color: white;
 }
-.heroBg p {
+.hero p {
   font-size: 20px;
   color: white;
   @apply my-5;
 }
-.heroBg button {
+.hero button {
   font-size: 20px;
   color: white;
   background: #0177fb;

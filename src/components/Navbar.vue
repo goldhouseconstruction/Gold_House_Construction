@@ -18,7 +18,7 @@
     <!-- Right section (navigation list) -->
 
     <!-- For small screen -->
-    <button @click="toggleMenu()" class="toggleBtn py-5">
+    <button @click="toggleMenu()" class="toggleBtn py-2">
       <i class="fa-solid fa-bars"></i>
     </button>
   </div>
@@ -58,7 +58,7 @@ export default {
   border-radius: 20px;
 }
 .navFrame {
-  @apply flex justify-between items-center px-10 bg-[#ffff];
+  @apply flex justify-between items-center px-10 py-2 bg-[#ffff];
 }
 .navList {
   @apply text-black cursor-pointer;
