@@ -17,7 +17,7 @@
         </div>
 
         <div class="w-70 px-4">
-          <h1 class="text-xl mb-2 font-bold">Highway Enginerring</h1>
+          <h1 class="text-xl mb-2 font-bold">Highway Engineering</h1>
           <p class="text-sm">
             We do highway projects with expertise in engineering design and
             testing, delivering safe, innovative, and precise solutions
@@ -36,7 +36,7 @@
         </div>
 
         <div class="w-70 px-4">
-          <h1 class="text-xl mb-2 font-bold">Municipal Enginerring</h1>
+          <h1 class="text-xl mb-2 font-bold">Municipal Engineering</h1>
           <p class="text-sm">
             We offer comprehensive Municipal Engineering services, encompassing
             planning, design, and implementation, to build sustainable and
@@ -79,7 +79,7 @@
         </div>
 
         <div class="w-70 px-4">
-          <h1 class="text-xl mb-2 font-bold">Bridge Enginerring</h1>
+          <h1 class="text-xl mb-2 font-bold">Bridge Engineering</h1>
           <p class="text-sm">
             We excel in designing, constructing, and inspecting bridges,
             ensuring durability, safety, and seamless integration into
@@ -98,7 +98,7 @@
         </div>
 
         <div class="w-70 px-4">
-          <h1 class="text-xl mb-2 font-bold">Enginerring Metrology</h1>
+          <h1 class="text-xl mb-2 font-bold">Engineering Metrology</h1>
           <p class="text-sm">
             We provide Quality Management Certificates, ensuring top-notch
             precision and excellence in all measurements.
