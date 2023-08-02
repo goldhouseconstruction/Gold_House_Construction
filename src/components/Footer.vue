@@ -8,8 +8,10 @@
         <div>
           <p class="footerHeading">Address:</p>
           <p class="footerText">
-            No(3), Thumingalar Road, Thumingalar Housing, Thingangyun T/S,
-            Yangon, Myanmar
+            <a href="https://goo.gl/maps/a9wotcA555WbCvJb8">
+              No(3), Thumingalar Road, Thumingalar Housing, Thingangyun T/S,
+              Yangon, Myanmar</a
+            >
           </p>
 
           <p class="footerHeading">Phone:</p>
