@@ -58,7 +58,7 @@ export default {
   border-radius: 20px;
 }
 .navFrame {
-  @apply flex justify-between items-center px-10 py-2 bg-[#ffff];
+  @apply flex justify-between items-center px-10 py-2 bg-[#ffff] fixed top-0 w-full bg-white shadow-lg;
 }
 .navList {
   @apply text-black cursor-pointer;

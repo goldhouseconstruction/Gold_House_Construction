@@ -25,6 +25,8 @@ export default {};
   justify-content: center;
   align-items: center;
   text-align: center;
+  margin-top: 50px;
+  padding-top: 20px;
 }
 .hero h1 {
   font-size: 30px;

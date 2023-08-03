@@ -568,6 +568,18 @@ video {
   }
 }
 
+.fixed {
+  position: fixed;
+}
+
+.top-0 {
+  top: 0px;
+}
+
+.top-\[-5\] {
+  top: -5;
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -616,6 +628,10 @@ video {
 
 .w-\[80\%\] {
   width: 80%;
+}
+
+.w-full {
+  width: 100%;
 }
 
 .grid-cols-1 {
@@ -669,6 +685,11 @@ video {
 
 .bg-\[\#ffff\] {
   background-color: #ffff;
+}
+
+.bg-white {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
 .p-4 {
