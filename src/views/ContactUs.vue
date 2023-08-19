@@ -63,6 +63,22 @@
       referrerpolicy="no-referrer-when-downgrade"
     ></iframe>
   </div>
+
+  <!-- Popup -->
+
+  <div
+    v-if="showPopup"
+    class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+  >
+    <div class="bg-white p-6 rounded shadow-lg">
+      <h2 class="text-xl font-semibold mb-4">
+        <button @click="showPopup = false" class="">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </h2>
+      <p class="mb-4">Our Team will contact you ASAP!!</p>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -73,19 +89,23 @@ import { collection, addDoc } from "firebase/firestore";
 export default {
   setup() {
     let email = ref("");
+    let showPopup = ref(false);
 
     let saveClientEmail = async () => {
       try {
         const docRef = await addDoc(collection(db, "client's_emails"), {
           email: email.value,
         });
-        console.log("Document written with ID: ", docRef.id);
+        if (docRef.id) {
+          showPopup.value = true;
+          email.value = "";
+        }
       } catch (e) {
         console.error("Error adding document: ", e);
       }
     };
 
-    return { email, saveClientEmail };
+    return { email, saveClientEmail, showPopup };
   },
 };
 </script>

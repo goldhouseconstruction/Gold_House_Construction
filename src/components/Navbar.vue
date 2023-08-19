@@ -13,7 +13,9 @@
         <li class="navList">
           <router-link :to="{ name: 'projects' }">Projects</router-link>
         </li>
-        <li class="navList">Services</li>
+        <li class="navList">
+          <router-link :to="{ name: 'equipments' }">Equipments</router-link>
+        </li>
         <li class="navList">
           <router-link :to="{ name: 'contact' }">Contact</router-link>
         </li>
@@ -29,8 +31,12 @@
   <div v-if="showMobileMenu" class="md:hidden mt-[6rem]">
     <div class="px-2 pt-2 py-3 space-y-1 sm:px-3">
       <router-link to="/" class="dropdownLink">Home</router-link>
-      <a class="dropdownLink">Projects</a>
-      <a class="dropdownLink">Services</a>
+      <router-link :to="{ name: 'projects' }" class="dropdownLink"
+        >Projects</router-link
+      >
+      <router-link :to="{ name: 'equipments' }" class="dropdownLink"
+        >Equipments</router-link
+      >
       <router-link :to="{ name: 'contact' }" class="dropdownLink"
         >Contact</router-link
       >
