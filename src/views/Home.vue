@@ -1,5 +1,5 @@
 <template>
-  <HeroSection />
+  <HeroforHome />
   <Services />
   <Footer></Footer>
 </template>
@@ -7,12 +7,12 @@
 <script>
 import Footer from "../components/Footer";
 import Services from "../components/Services";
-import HeroSection from "../components/HeroSection";
+import HeroforHome from "../components/HeroforHome.vue";
 export default {
   components: {
     Footer,
     Services,
-    HeroSection,
+    HeroforHome,
   },
 };
 </script>

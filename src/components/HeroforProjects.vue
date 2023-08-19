@@ -1,10 +1,10 @@
 <template>
-  <div class="hero">
-    <h1>Excellence in Engineering, Commitment to Quality</h1>
+  <div class="heroForProjects">
+    <h1>The Key of Our Success</h1>
 
-    <p>"Building the Future, Together"</p>
+    <p>Check our completed projects</p>
 
-    <button><a href="#services">Our Services</a></button>
+    <button><a href="#services">Our Projects</a></button>
   </div>
 </template>
 
@@ -12,7 +12,7 @@
 export default {};
 </script>
 <style scoped>
-.hero {
+.heroForProjects {
   background-image: url("../../public/img/hero3.jpg");
   background-size: cover;
   background-repeat: no-repeat;
@@ -26,18 +26,18 @@ export default {};
   align-items: center;
   text-align: center;
   margin-top: 50px;
-  padding-top: 20px;
+  padding-top: 50px;
 }
-.hero h1 {
+.heroForProjects h1 {
   font-size: 30px;
   color: white;
 }
-.hero p {
+.heroForProjects p {
   font-size: 20px;
   color: white;
   @apply my-5;
 }
-.hero button {
+.heroForProjects button {
   font-size: 20px;
   color: white;
   background: #0177fb;

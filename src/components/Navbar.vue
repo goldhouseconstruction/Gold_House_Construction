@@ -10,7 +10,9 @@
     <nav class="hidden sm:block">
       <ul class="flex items-center space-x-10">
         <li class="navList"><router-link to="/">Home</router-link></li>
-        <li class="navList">Projects</li>
+        <li class="navList">
+          <router-link :to="{ name: 'projects' }">Projects</router-link>
+        </li>
         <li class="navList">Services</li>
         <li class="navList">Contact</li>
       </ul>
@@ -22,8 +24,8 @@
       <i class="fa-solid fa-bars"></i>
     </button>
   </div>
-  <div v-if="showMobileMenu" class="md:hidden">
-    <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+  <div v-if="showMobileMenu" class="md:hidden mt-[6rem]">
+    <div class="px-2 pt-2 py-3 space-y-1 sm:px-3">
       <router-link to="/" class="dropdownLink">Home</router-link>
       <a class="dropdownLink">Projects</a>
       <a class="dropdownLink">Services</a>
