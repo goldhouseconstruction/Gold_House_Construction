@@ -1,7 +1,6 @@
 <template>
   <HeroforHome />
   <Services />
-  <Footer></Footer>
 </template>
 
 <script>

@@ -14,7 +14,9 @@
           <router-link :to="{ name: 'projects' }">Projects</router-link>
         </li>
         <li class="navList">Services</li>
-        <li class="navList">Contact</li>
+        <li class="navList">
+          <router-link :to="{ name: 'contact' }">Contact</router-link>
+        </li>
       </ul>
     </nav>
     <!-- Right section (navigation list) -->
@@ -29,7 +31,7 @@
       <router-link to="/" class="dropdownLink">Home</router-link>
       <a class="dropdownLink">Projects</a>
       <a class="dropdownLink">Services</a>
-      <a class="dropdownLink">Contact</a>
+      <router-link :to="{ name: 'contact' }">Contact</router-link>
     </div>
   </div>
   <!-- For small screen -->

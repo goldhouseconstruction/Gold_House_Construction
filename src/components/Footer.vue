@@ -64,7 +64,7 @@ export default {};
   @apply text-[#7D868E] mb-2;
 }
 .footerLink {
-  @apply text-[#0177FA] mb-2;
+  @apply text-[#0177FA] mb-2 cursor-pointer;
 }
 .footerSocial {
   @apply text-[#ffff];
