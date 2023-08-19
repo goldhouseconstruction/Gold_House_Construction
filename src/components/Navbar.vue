@@ -31,7 +31,9 @@
       <router-link to="/" class="dropdownLink">Home</router-link>
       <a class="dropdownLink">Projects</a>
       <a class="dropdownLink">Services</a>
-      <router-link :to="{ name: 'contact' }">Contact</router-link>
+      <router-link :to="{ name: 'contact' }" class="dropdownLink"
+        >Contact</router-link
+      >
     </div>
   </div>
   <!-- For small screen -->
@@ -72,7 +74,7 @@ export default {
   height: 50px;
 }
 .dropdownLink {
-  @apply text-gray-500   block px-3 py-2 rounded-md text-base font-medium;
+  @apply text-gray-500  block px-3 py-2 rounded-md text-base font-medium;
 }
 .toggleBtn {
   float: right;
