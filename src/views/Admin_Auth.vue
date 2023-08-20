@@ -24,7 +24,7 @@
 
 <script>
 import db from "../firebase/init";
-import { collection, addDoc, setDoc, doc, getDoc } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 export default {
@@ -63,6 +63,6 @@ export default {
   @apply text-red-600 mt-5;
 }
 .card {
-  @apply bg-white rounded-lg overflow-hidden shadow-md w-[30%] mx-auto p-5;
+  @apply bg-white rounded-lg overflow-hidden shadow-md w-[50%] mx-auto p-5;
 }
 </style>
