@@ -3,6 +3,10 @@ import Home from "../views/Home.vue";
 import Projects from "../views/Projects.vue";
 import ContactUs from "../views/ContactUs.vue";
 import Equipments from "../views/Equipments.vue";
+import Admin_Auth from "../views/Admin_Auth.vue";
+import Clients from "../views/Clients.vue";
+import EditEquipments from "../views/EditEquipments.vue";
+import EditProjects from "../views/EditProjects.vue";
 
 const routes = [
   {
@@ -24,6 +28,26 @@ const routes = [
     path: "/equipments",
     name: "equipments",
     component: Equipments,
+  },
+  {
+    path: "/admin_auth",
+    name: "admin_auth",
+    component: Admin_Auth,
+  },
+  {
+    path: "/dashboard/clients",
+    name: "clients",
+    component: Clients,
+  },
+  {
+    path: "/dashboard/equipments",
+    name: "editequipments",
+    component: EditEquipments,
+  },
+  {
+    path: "/dashboard/projects",
+    name: "editprojects",
+    component: EditProjects,
   },
 ];
 
