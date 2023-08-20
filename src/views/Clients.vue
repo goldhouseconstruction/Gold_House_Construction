@@ -27,7 +27,12 @@
         <tbody>
           <tr v-for="client in clients" :key="client.id">
             <td class="px-6 py-4">{{ client.email }}</td>
-            <td class="px-6 py-4">{{ client.message }}</td>
+            <td
+              class="px-6 py-4 test max-w-xs"
+              style="white-space: normal; word-wrap: break-word"
+            >
+              {{ client.message }}
+            </td>
             <td class="px-6 py-4">
               <button class="btn" @click="removeClient(client.id)">Done</button>
             </td>
@@ -76,9 +81,9 @@ export default {
 
 <style scoped>
 .table-container {
-  @apply bg-white rounded shadow overflow-hidden;
-  max-width: 80%;
-  margin: 0 auto;
+  @apply bg-white rounded shadow overflow-hidden md:w-[80%] w-[100%];
+
+  margin: 80px auto;
 }
 .card {
   background-color: #ffffff;
