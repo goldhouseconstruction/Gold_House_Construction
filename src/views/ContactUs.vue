@@ -29,7 +29,7 @@
 
     <!-- Column 2 -->
     <div class="p-4 w-[70%] mx-auto">
-      <form @submit.prevent="saveClientEmail">
+      <form @submit.prevent="saveClientMessage">
         <p class="text-xl my-5">
           Please Fill your contact info. We will contact you back ASAP.
         </p>
@@ -41,6 +41,16 @@
           v-model="email"
           class="w-full px-3 py-2 border rounded"
         />
+
+        <label for="email" class="block mb-2">Write message to us:</label>
+
+        <textarea
+          name="message"
+          v-model="message"
+          class="w-full px-3 py-2 border rounded"
+          id="message"
+          cols="30"
+        ></textarea>
 
         <button
           type="submit"
@@ -89,12 +99,14 @@ import { collection, addDoc } from "firebase/firestore";
 export default {
   setup() {
     let email = ref("");
+    let message = ref("");
     let showPopup = ref(false);
 
-    let saveClientEmail = async () => {
+    let saveClientMessage = async () => {
       try {
-        const docRef = await addDoc(collection(db, "client's_emails"), {
+        const docRef = await addDoc(collection(db, "client's_msg"), {
           email: email.value,
+          message: message.value,
         });
         if (docRef.id) {
           showPopup.value = true;
@@ -105,7 +117,7 @@ export default {
       }
     };
 
-    return { email, saveClientEmail, showPopup };
+    return { email, message, saveClientMessage, showPopup };
   },
 };
 </script>
