@@ -2,7 +2,15 @@
   <div class="mt-[8rem]">
     <div class="card">
       <form @submit.prevent="login">
-        <label for="email" class="block mb-2">Password Login</label>
+        <label for="email" class="block mb-2">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          v-model="email"
+          class="w-full px-3 py-2 border rounded"
+        />
+        <label for="email" class="block mb-2">Password </label>
         <input
           type="password"
           id="password"
@@ -23,37 +31,53 @@
 </template>
 
 <script>
-import db from "../firebase/init";
-import { doc, getDoc } from "firebase/firestore";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 export default {
   setup() {
     let router = useRouter();
+    let email = ref("");
     let password = ref("");
     let error = ref("");
 
-    let login = async () => {
-      try {
-        const docRef = doc(db, "admin's_info", "admin");
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-          const passwordfromDb = data.password;
-
-          if (passwordfromDb === password.value) {
-            router.push("/dashboard/clients");
-          } else {
-            error.value = "password is wrong!!";
-            password.value = "";
-          }
-        }
-      } catch (e) {
-        console.error("Error adding document: ", e);
-      }
+    //create account
+    let signup = async () => {
+      const auth = getAuth();
+      createUserWithEmailAndPassword(auth, email.value, password.value)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          console.log(user);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+        });
     };
 
-    return { password, error, login };
+    let login = async () => {
+      const auth = getAuth();
+      signInWithEmailAndPassword(auth, email.value, password.value)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          if (user) {
+            router.push("dashboard/clients");
+          }
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+        });
+    };
+
+    return { email, password, error, login, signup };
   },
 };
 </script>

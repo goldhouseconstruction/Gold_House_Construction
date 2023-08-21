@@ -52,7 +52,7 @@ export default {
   setup() {
     let clients = ref([]);
     onMounted(async () => {
-      const collectionRef = collection(db, "client's_msg");
+      const collectionRef = collection(db, "clients");
       const querySnapshot = await getDocs(collectionRef);
 
       querySnapshot.forEach((doc) => {
@@ -64,7 +64,7 @@ export default {
     //to remove client that we need to contact
     let removeClient = async (clientId) => {
       try {
-        const clientRef = doc(db, "client's_msg", clientId);
+        const clientRef = doc(db, "clients", clientId);
         await deleteDoc(clientRef);
         clients.value = clients.value.filter(
           (client) => client.id !== clientId

@@ -104,7 +104,7 @@ export default {
 
     let saveClientMessage = async () => {
       try {
-        const docRef = await addDoc(collection(db, "client's_msg"), {
+        const docRef = await addDoc(collection(db, "clients"), {
           email: email.value,
           message: message.value,
         });

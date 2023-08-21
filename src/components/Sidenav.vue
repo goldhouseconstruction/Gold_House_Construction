@@ -19,13 +19,32 @@
           >Projects</router-link
         >
       </p>
+      <p>
+        <button @click="logout()">Logout</button>
+      </p>
     </div>
   </div>
 </template>
 
 <script>
+import { getAuth, signOut } from "firebase/auth";
+import { useRouter } from "vue-router";
 export default {
   name: "Sidebar",
+  setup() {
+    let router = useRouter();
+    let logout = async () => {
+      const auth = getAuth();
+      signOut(auth)
+        .then(() => {
+          router.push("/");
+        })
+        .catch((error) => {
+          // An error happened.
+        });
+    };
+    return { logout };
+  },
 };
 </script>
 <style></style>
