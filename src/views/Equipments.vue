@@ -14,7 +14,11 @@
 
           <!-- Image Column (40% width) -->
           <div class="sm:w-40 mx-auto my-auto">
-            <img src="../../public/img/excavator.png" alt="Card Image 1" />
+            <a href="https://imgbb.com/"
+              ><img
+                src="https://i.ibb.co/zQHdc81/excavator.png"
+                alt="excavator"
+            /></a>
           </div>
         </div>
       </div>
