@@ -11,12 +11,12 @@
 
       <p>
         <router-link to="/dashboard/equipments" class="block py-2"
-          >Equipments</router-link
+          >Edit Equipments</router-link
         >
       </p>
       <p>
         <router-link to="/dashboard/projects" class="block py-2"
-          >Projects</router-link
+          >Edit Projects</router-link
         >
       </p>
       <p>

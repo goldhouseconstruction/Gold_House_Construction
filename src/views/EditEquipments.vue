@@ -12,6 +12,7 @@
                 <th scope="col">Name</th>
                 <th scope="col">Description</th>
                 <th scope="col">Image</th>
+                <th scope="col">Edit</th>
               </tr>
             </thead>
             <tbody>
@@ -28,6 +29,14 @@
                     :src="currentEquipment.imageUrl"
                     :alt="currentEquipment.eqpName"
                   />
+                </td>
+                <td data-label="Edit">
+                  <button
+                    @click="deleteEqp(currentEquipment.id)"
+                    class="mt-8 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             </tbody>
@@ -102,7 +111,14 @@
 </template>
 
 <script>
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+} from "firebase/firestore";
 import db from "../firebase/init";
 import { onMounted, ref } from "vue";
 export default {
@@ -116,9 +132,9 @@ export default {
     onMounted(async () => {
       const querySnapshot = await getDocs(collection(db, "equipments"));
       querySnapshot.forEach((doc) => {
-        currentEquipments.value.push(doc.data());
+        const EquipmentData = { id: doc.id, ...doc.data() };
+        currentEquipments.value.push(EquipmentData);
       });
-      console.log(currentEquipments.value);
     });
     let addEquipment = async () => {
       const docRef = await addDoc(collection(db, "equipments"), {
@@ -126,9 +142,38 @@ export default {
         description: description.value,
         imageUrl: imageUrl.value,
       });
-      console.log(docRef);
+      // Fetch the newly added equipment from Firestore using the docRef
+      const equipmentSnapshot = await getDoc(doc(db, "equipments", docRef.id));
+      const newEquipment = { id: docRef.id, ...equipmentSnapshot.data() };
+
+      // Update the local array currentEquipment with the new equipment
+      currentEquipments.value.push(newEquipment);
+
+      // Clear the input values after adding
+      eqpName.value = "";
+      description.value = "";
+      imageUrl.value = "";
     };
-    return { currentEquipments, eqpName, description, imageUrl, addEquipment };
+
+    let deleteEqp = async (eqpId) => {
+      try {
+        const eqpRef = doc(db, "equipments", eqpId);
+        await deleteDoc(eqpRef);
+        currentEquipments.value = currentEquipments.value.filter(
+          (currentEquipment) => currentEquipment.id !== eqpId
+        );
+      } catch (error) {
+        console.error("Error removing client:", error);
+      }
+    };
+    return {
+      currentEquipments,
+      eqpName,
+      description,
+      imageUrl,
+      addEquipment,
+      deleteEqp,
+    };
   },
 };
 </script>
