@@ -4,37 +4,28 @@
   </div>
   <div class="table-container" v-if="clients.length">
     <div class="overflow-x-auto">
-      <table class="min-w-full">
+      <table>
+        <caption>
+          Clients
+        </caption>
         <thead>
           <tr>
-            <th
-              class="px-6 py-3 bg-gray-100 text-left font-semibold text-gray-700"
-            >
-              Email
-            </th>
-            <th
-              class="px-6 py-3 bg-gray-100 text-left font-semibold text-gray-700"
-            >
-              Message
-            </th>
-            <th
-              class="px-6 py-3 bg-gray-100 text-left font-semibold text-gray-700"
-            >
-              Done?
-            </th>
+            <th scope="col">Email</th>
+            <th scope="col">Message</th>
+            <th scope="col">Done?</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="client in clients" :key="client.id">
-            <td class="px-6 py-4">{{ client.email }}</td>
-            <td
-              class="px-6 py-4 test max-w-xs"
-              style="white-space: normal; word-wrap: break-word"
-            >
-              {{ client.message }}
-            </td>
-            <td class="px-6 py-4">
-              <button class="btn" @click="removeClient(client.id)">Done</button>
+            <td data-label="Email">{{ client.email }}</td>
+            <td data-label="Message">{{ client.message }}</td>
+            <td data-label="Done?">
+              <button
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                @click="removeClient(client.id)"
+              >
+                Done
+              </button>
             </td>
           </tr>
         </tbody>
@@ -81,9 +72,95 @@ export default {
 
 <style scoped>
 .table-container {
-  @apply bg-white rounded shadow overflow-hidden md:w-[80%] w-[100%];
+  @apply bg-white rounded shadow;
 
   margin: 80px auto;
+}
+
+table {
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  table-layout: fixed;
+}
+
+table caption {
+  font-size: 1.5em;
+  margin: 0.5em 0 0.75em;
+}
+
+table tr {
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  padding: 0.35em;
+}
+
+table th,
+table td {
+  padding: 0.625em;
+  text-align: center;
+}
+
+table th {
+  font-size: 0.85em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+@media screen and (max-width: 600px) {
+  table {
+    border: 0;
+  }
+
+  table caption {
+    font-size: 1.3em;
+  }
+
+  table thead {
+    border: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+
+  table tr {
+    border-bottom: 3px solid #ddd;
+    display: block;
+    margin-bottom: 0.625em;
+  }
+
+  table td {
+    border-bottom: 1px solid #ddd;
+    display: block;
+    font-size: 0.8em;
+    text-align: right;
+  }
+
+  table td::before {
+    /*
+    * aria-label has no advantage, it won't be read inside a table
+    content: attr(aria-label);
+    */
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  table td:last-child {
+    border-bottom: 0;
+  }
+}
+
+/* general styling */
+body {
+  line-height: 1.25;
 }
 .card {
   background-color: #ffffff;

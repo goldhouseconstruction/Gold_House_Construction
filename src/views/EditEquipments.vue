@@ -3,25 +3,15 @@
     <div class="md:w-1/2 p-4">
       <div class="table-container">
         <div class="overflow-x-auto">
-          <h1 class="text-xl text-center my-5 underline">Current Equipments</h1>
-          <table class="min-w-full">
+          <table>
+            <caption>
+              Current Equipments
+            </caption>
             <thead>
               <tr>
-                <th
-                  class="px-6 py-3 bg-gray-100 text-left font-semibold text-gray-700"
-                >
-                  Equipment Name
-                </th>
-                <th
-                  class="px-6 py-3 bg-gray-100 text-left font-semibold text-gray-700"
-                >
-                  Description
-                </th>
-                <th
-                  class="px-6 py-3 bg-gray-100 text-left font-semibold text-gray-700"
-                >
-                  Image
-                </th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Image</th>
               </tr>
             </thead>
             <tbody>
@@ -29,14 +19,11 @@
                 v-for="currentEquipment in currentEquipments"
                 :key="currentEquipment.id"
               >
-                <td class="px-6 py-4">{{ currentEquipment.eqpName }}</td>
-                <td
-                  class="px-6 py-4 test max-w-xs"
-                  style="white-space: normal; word-wrap: break-word"
-                >
+                <td data-label="Name">{{ currentEquipment.eqpName }}</td>
+                <td data-label="Description">
                   {{ currentEquipment.description }}
                 </td>
-                <td class="px-6 py-4">
+                <td data-label="ImageUrl">
                   <img
                     :src="currentEquipment.imageUrl"
                     :alt="currentEquipment.eqpName"
@@ -149,5 +136,91 @@ export default {
 <style>
 .table-container {
   @apply w-[90%] mx-auto;
+}
+
+table {
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  table-layout: fixed;
+}
+
+table caption {
+  font-size: 1.5em;
+  margin: 0.5em 0 0.75em;
+}
+
+table tr {
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  padding: 0.35em;
+}
+
+table th,
+table td {
+  padding: 0.625em;
+  text-align: center;
+}
+
+table th {
+  font-size: 0.85em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+@media screen and (max-width: 600px) {
+  table {
+    border: 0;
+  }
+
+  table caption {
+    font-size: 1.3em;
+  }
+
+  table thead {
+    border: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+
+  table tr {
+    border-bottom: 3px solid #ddd;
+    display: block;
+    margin-bottom: 0.625em;
+  }
+
+  table td {
+    border-bottom: 1px solid #ddd;
+    display: block;
+    font-size: 0.8em;
+    text-align: right;
+  }
+
+  table td::before {
+    /*
+    * aria-label has no advantage, it won't be read inside a table
+    content: attr(aria-label);
+    */
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  table td:last-child {
+    border-bottom: 0;
+  }
+}
+
+/* general styling */
+body {
+  line-height: 1.25;
 }
 </style>
