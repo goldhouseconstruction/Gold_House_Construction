@@ -1,5 +1,6 @@
 <template>
   <div class="md:flex">
+    <!-- table -->
     <div class="md:w-1/2 p-4">
       <div class="table-container">
         <div class="overflow-x-auto">
@@ -17,7 +18,7 @@
             </thead>
             <tbody>
               <tr
-                v-for="currentEquipment in currentEquipments"
+                v-for="currentEquipment in displayEquipments"
                 :key="currentEquipment.id"
               >
                 <td data-label="Name">{{ currentEquipment.eqpName }}</td>
@@ -41,10 +42,27 @@
               </tr>
             </tbody>
           </table>
+          <div class="flex justify-center mt-5">
+            <button
+              @click="previousPage"
+              v-if="currentPage > 1"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-2 rounded focus:outline-none focus:shadow-outline"
+            >
+              Previous
+            </button>
+            <button
+              @click="nextPage"
+              v-if="currentPage < totalPages"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            >
+              Next
+            </button>
+          </div>
         </div>
       </div>
     </div>
-    <div class="md:w-1/2 p-4">
+    <!-- Add, Edit Form -->
+    <div class="md:w-1/2 p-4 my-auto">
       <div class="max-w-md mx-auto p-4">
         <form
           class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
@@ -120,7 +138,7 @@ import {
   getDocs,
 } from "firebase/firestore";
 import db from "../firebase/init";
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 export default {
   setup() {
     let currentEquipments = ref([]);
@@ -128,7 +146,7 @@ export default {
     let description = ref("");
     let imageUrl = ref("");
 
-    //getEquipments
+    //getAllEquipments
     onMounted(async () => {
       const querySnapshot = await getDocs(collection(db, "equipments"));
       querySnapshot.forEach((doc) => {
@@ -166,6 +184,33 @@ export default {
         console.error("Error removing client:", error);
       }
     };
+
+    //pagination
+    const pageSize = 4;
+    const currentPage = ref(1);
+
+    const totalPages = computed(() =>
+      Math.ceil(currentEquipments.value.length / pageSize)
+    );
+
+    const displayEquipments = computed(() => {
+      const startIndex = (currentPage.value - 1) * pageSize;
+      const endIndex = startIndex + pageSize;
+      return currentEquipments.value.slice(startIndex, endIndex);
+    });
+
+    const nextPage = () => {
+      if (currentPage.value < totalPages.value) {
+        currentPage.value++;
+      }
+    };
+
+    const previousPage = () => {
+      if (currentPage.value > 1) {
+        currentPage.value--;
+      }
+    };
+    //pagination
     return {
       currentEquipments,
       eqpName,
@@ -173,6 +218,11 @@ export default {
       imageUrl,
       addEquipment,
       deleteEqp,
+      displayEquipments,
+      currentPage,
+      nextPage,
+      previousPage,
+      totalPages,
     };
   },
 };
