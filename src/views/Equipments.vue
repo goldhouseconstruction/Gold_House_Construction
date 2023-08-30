@@ -4,7 +4,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mx-10">
       <!-- Card 1 -->
       <div
-        class="bg-white rounded-lg overflow-hidden shadow-md"
+        class="bg-white rounded-lg overflow-hidden shadow-md my-[2rem]"
         v-for="Equipment in allEquipments"
         :key="Equipment.id"
       >

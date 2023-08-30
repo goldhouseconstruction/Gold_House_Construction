@@ -33,12 +33,38 @@
                 </td>
                 <td data-label="Edit">
                   <button
-                    @click="deleteEqp(currentEquipment.id)"
-                    class="mt-8 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                    @click="confirmDelete = true"
+                    class="md:mt-8 px-4 py-2 mx-2 bg-blue-500 text-white rounded hover:bg-blue-600"
                   >
                     Delete
                   </button>
+                  <button
+                    @click="showEditForm(currentEquipment.id)"
+                    class="md:mt-8 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                  >
+                    Edit
+                  </button>
                 </td>
+                <!-- Pop up -->
+                <div
+                  v-if="confirmDelete"
+                  class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+                >
+                  <div class="bg-white p-6 rounded shadow-lg">
+                    <h2 class="text-xl font-semibold mb-4">
+                      <button @click="confirmDelete = false" class="">
+                        <i class="fa-solid fa-xmark"></i>
+                      </button>
+                    </h2>
+                    <p class="mb-4">Are you sure you want to delete?</p>
+                    <button
+                      @click="deleteEqp(currentEquipment.id)"
+                      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    >
+                      Yes, Delete
+                    </button>
+                  </div>
+                </div>
               </tr>
             </tbody>
           </table>
@@ -68,7 +94,12 @@
           class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
           @submit.prevent="addEquipment"
         >
-          <h1 class="text-center text-xl my-3 underline">Add New Equipment</h1>
+          <h1 v-if="!isEditForm" class="text-center text-xl my-3 underline">
+            Add New Equipment
+          </h1>
+          <h1 v-if="isEditForm" class="text-center text-xl my-3 underline">
+            Edit Equipment
+          </h1>
           <div class="mb-4">
             <label
               class="block text-gray-700 text-sm font-bold mb-2"
@@ -119,7 +150,8 @@
               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
             >
-              Add Equipment
+              <p v-if="!isEditForm">Add Equipment</p>
+              <p v-if="isEditForm">Edit Equipment</p>
             </button>
           </div>
         </form>
@@ -145,6 +177,8 @@ export default {
     let eqpName = ref("");
     let description = ref("");
     let imageUrl = ref("");
+    let confirmDelete = ref(false);
+    let isEditForm = ref(false);
 
     //getAllEquipments
     onMounted(async () => {
@@ -180,6 +214,7 @@ export default {
         currentEquipments.value = currentEquipments.value.filter(
           (currentEquipment) => currentEquipment.id !== eqpId
         );
+        confirmDelete.value = false;
       } catch (error) {
         console.error("Error removing client:", error);
       }
@@ -211,6 +246,20 @@ export default {
       }
     };
     //pagination
+
+    //Edit Equipments
+    let showEditForm = (id) => {
+      let editEquipment = currentEquipments.value.filter((equipment) => {
+        return equipment.id === id;
+      });
+
+      eqpName.value = editEquipment[0].eqpName;
+      description.value = editEquipment[0].description;
+      imageUrl.value = editEquipment[0].imageUrl;
+
+      //form edit button change
+      isEditForm.value = true;
+    };
     return {
       currentEquipments,
       eqpName,
@@ -223,6 +272,9 @@ export default {
       nextPage,
       previousPage,
       totalPages,
+      confirmDelete,
+      showEditForm,
+      isEditForm,
     };
   },
 };
@@ -296,6 +348,9 @@ table th {
     display: block;
     font-size: 0.8em;
     text-align: right;
+  }
+  table th {
+    margin: 0;
   }
 
   table td::before {
