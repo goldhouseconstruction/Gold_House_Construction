@@ -238,7 +238,20 @@ export default {
         orderBy("completed_date", "desc")
       );
       querySnapshot.forEach((doc) => {
-        const ProjectData = { id: doc.id, ...doc.data() };
+        const completedDateTimestamp = doc.data().completed_date;
+        const completedDate = completedDateTimestamp.toDate();
+        // Get year, month, and day
+        const year = completedDate.getFullYear();
+        const month = String(completedDate.getMonth() + 1).padStart(2, "0");
+        const day = String(completedDate.getDate()).padStart(2, "0");
+
+        // Format the date as yyyy-MM-dd
+        const formattedDate = `${year}-${month}-${day}`;
+        const ProjectData = {
+          id: doc.id,
+          ...doc.data(),
+          completed_date: formattedDate,
+        };
         currentProjects.value.push(ProjectData);
       });
     });
@@ -348,6 +361,19 @@ export default {
         completed_date: timestamp,
         local_oversea: local_oversea.value,
       });
+      const index = currentProjects.value.findIndex(
+        (currentProject) => currentProject.id === id
+      );
+      if (index !== -1) {
+        currentProjects.value[index] = {
+          project_name: projectName.value,
+          description: description.value,
+          imageUrl: imageUrl.value,
+          location: location.value,
+          completed_date: timestamp,
+          local_oversea: local_oversea.value,
+        };
+      }
     };
     return {
       currentProjects,

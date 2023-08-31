@@ -1,5 +1,5 @@
 <template>
-  <h2 class="servicesHeading">Our Services</h2>
+  <h2 class="servicesHeading" id="services">Our Services</h2>
   <div class="flex justify-center">
     <div class="yellowLine"></div>
   </div>

@@ -4,7 +4,7 @@
 
     <p>Check our completed projects</p>
 
-    <button><a href="#services">Our Projects</a></button>
+    <button><a href="#projects">Our Projects</a></button>
   </div>
 </template>
 

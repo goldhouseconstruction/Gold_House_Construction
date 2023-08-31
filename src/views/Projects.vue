@@ -2,14 +2,18 @@
   <HeroforProjects />
 
   <!-- Project Section -->
-  <div class="w-[80%] mx-auto mt-10">
+  <div class="w-[80%] mx-auto mt-10" id="projects">
     <h1 class="text-center text-2xl text-[#D98106]">Latest Projects</h1>
     <FilterNav></FilterNav>
 
     <div class="projectsSec">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <!-- Column 1 -->
-        <div class="p-4">
+        <div
+          class="p-4"
+          v-for="completedProject in allcompletedProjects"
+          :key="completedProject.id"
+        >
           <div
             class="max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden"
           >
@@ -19,65 +23,19 @@
               alt="Project Image"
             />
             <div class="p-4">
-              <h2 class="text-xl font-semibold mb-2">Project Title</h2>
-              <p class="text-gray-600 mb-3">Location: City, State</p>
+              <h2 class="text-xl font-semibold mb-2">
+                {{ completedProject.project_name }}
+              </h2>
+              <p class="text-gray-600 mb-3">
+                Location: {{ completedProject.location }}
+              </p>
               <p class="text-gray-800 mb-4">
-                A brief and engaging project description that highlights key
-                features and accomplishments.
+                {{ completedProject.description }}
               </p>
               <div class="flex items-center justify-between">
-                <p class="text-sm text-gray-500">Completion Date: Month Year</p>
-                <a href="#" class="text-blue-500 hover:underline">Learn More</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Column 2 -->
-        <div class="p-4">
-          <div
-            class="max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden"
-          >
-            <img
-              class="w-full h-48 object-cover"
-              src="../../public/img/excavator.png"
-              alt="Project Image"
-            />
-            <div class="p-4">
-              <h2 class="text-xl font-semibold mb-2">Project Title</h2>
-              <p class="text-gray-600 mb-3">Location: City, State</p>
-              <p class="text-gray-800 mb-4">
-                A brief and engaging project description that highlights key
-                features and accomplishments.
-              </p>
-              <div class="flex items-center justify-between">
-                <p class="text-sm text-gray-500">Completion Date: Month Year</p>
-                <a href="#" class="text-blue-500 hover:underline">Learn More</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Column 3 -->
-        <div class="p-4">
-          <div
-            class="max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden"
-          >
-            <img
-              class="w-full h-48 object-cover"
-              src="../../public/img/excavator.png"
-              alt="Project Image"
-            />
-            <div class="p-4">
-              <h2 class="text-xl font-semibold mb-2">Project Title</h2>
-              <p class="text-gray-600 mb-3">Location: City, State</p>
-              <p class="text-gray-800 mb-4">
-                A brief and engaging project description that highlights key
-                features and accomplishments.
-              </p>
-              <div class="flex items-center justify-between">
-                <p class="text-sm text-gray-500">Completion Date: Month Year</p>
-                <a href="#" class="text-blue-500 hover:underline">Learn More</a>
+                <p class="text-sm text-gray-500">
+                  Completion Date: {{ completedProject.completed_date }}
+                </p>
               </div>
             </div>
           </div>
@@ -88,12 +46,40 @@
 </template>
 
 <script>
+import { onMounted, ref } from "vue";
 import FilterNav from "../components/filterNav";
+import timeStamptoString from "../composables/timeStamptoString";
 import HeroforProjects from "../components/HeroforProjects";
+import { collection, getDocs, orderBy } from "firebase/firestore";
+import db from "@/firebase/init";
 export default {
   components: {
     FilterNav,
     HeroforProjects,
+  },
+  setup() {
+    let allcompletedProjects = ref([]);
+    //getAllEquipments
+    onMounted(async () => {
+      const querySnapshot = await getDocs(
+        collection(db, "completed_projects"),
+        orderBy("completed_date", "desc")
+      );
+      querySnapshot.forEach((doc) => {
+        //change time stamp to string
+        const completedDateTimestamp = doc.data().completed_date;
+        const completedDate = completedDateTimestamp.toDate();
+        const formattedDate = completedDate.toLocaleDateString("en-US");
+        //change time stamp to string
+        const ProjectData = {
+          id: doc.id,
+          ...doc.data(),
+          completed_date: formattedDate,
+        };
+        allcompletedProjects.value.push(ProjectData);
+      });
+    });
+    return { allcompletedProjects };
   },
 };
 </script>
