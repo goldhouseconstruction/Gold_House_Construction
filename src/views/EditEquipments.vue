@@ -55,7 +55,7 @@
               >
                 <div class="bg-white p-6 rounded shadow-lg">
                   <h2 class="text-xl font-semibold mb-4">
-                    <button @click="confirmDelete = false" class="">
+                    <button @click="showConfirmDelete = false" class="">
                       <i class="fa-solid fa-xmark"></i>
                     </button>
                   </h2>
@@ -212,8 +212,8 @@ export default {
     };
 
     let confirmDelete = (id) => {
-      showConfirmDelete.value = true;
       edit_delete_id.value = id;
+      showConfirmDelete.value = true;
     };
     let deleteEqp = async () => {
       try {

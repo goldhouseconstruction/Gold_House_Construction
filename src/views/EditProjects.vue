@@ -33,7 +33,7 @@
                 </td>
                 <td data-label="Edit">
                   <button
-                    @click="confirmDelete = true"
+                    @click="confirmDelete(currentProject.id)"
                     class="md:mt-8 px-4 py-2 mx-2 bg-blue-500 text-white rounded hover:bg-blue-600"
                   >
                     Delete
@@ -45,27 +45,27 @@
                     Edit
                   </button>
                 </td>
-                <!-- Pop up -->
-                <div
-                  v-if="confirmDelete"
-                  class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
-                >
-                  <div class="bg-white p-6 rounded shadow-lg">
-                    <h2 class="text-xl font-semibold mb-4">
-                      <button @click="confirmDelete = false" class="">
-                        <i class="fa-solid fa-xmark"></i>
-                      </button>
-                    </h2>
-                    <p class="mb-4">Are you sure you want to delete?</p>
-                    <button
-                      @click="deleteProject(currentProject.id)"
-                      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                    >
-                      Yes, Delete
-                    </button>
-                  </div>
-                </div>
               </tr>
+              <!-- Pop up -->
+              <div
+                v-if="showConfirmDelete"
+                class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+              >
+                <div class="bg-white p-6 rounded shadow-lg">
+                  <h2 class="text-xl font-semibold mb-4">
+                    <button @click="showConfirmDelete = false" class="">
+                      <i class="fa-solid fa-xmark"></i>
+                    </button>
+                  </h2>
+                  <p class="mb-4">Are you sure you want to delete?</p>
+                  <button
+                    @click="deleteProject()"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  >
+                    Yes, Delete
+                  </button>
+                </div>
+              </div>
             </tbody>
           </table>
           <div class="flex justify-center mt-5">
@@ -195,7 +195,7 @@
         <button
           v-if="isEditForm"
           class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          @click="editProject(editProjectId)"
+          @click="editProject(edit_delete_id)"
         >
           Edit Project
         </button>
@@ -227,13 +227,16 @@ export default {
     let location = ref("");
     let local_oversea = ref("oversea");
     let completedDate = ref("");
-    let confirmDelete = ref(false);
+    let showConfirmDelete = ref(false);
     let isEditForm = ref(false);
-    let editProjectId = ref("");
+    let edit_delete_id = ref("");
 
     //getAllEquipments
     onMounted(async () => {
-      const querySnapshot = await getDocs(collection(db, "completed_projects"));
+      const querySnapshot = await getDocs(
+        collection(db, "completed_projects"),
+        orderBy("completed_date", "desc")
+      );
       querySnapshot.forEach((doc) => {
         const ProjectData = { id: doc.id, ...doc.data() };
         currentProjects.value.push(ProjectData);
@@ -261,7 +264,6 @@ export default {
 
       // Update the local array currentProject with the new equipment
       currentProjects.value.push(newProject);
-      console.log(currentProjects.value);
 
       // Clear the input values after adding
       projectName.value = "";
@@ -272,15 +274,18 @@ export default {
       local_oversea.value = "";
     };
 
-    let deleteProject = async (projectId) => {
+    let confirmDelete = (id) => {
+      edit_delete_id.value = id;
+      showConfirmDelete.value = true;
+    };
+    let deleteProject = async () => {
       try {
-        console.log(projectId);
-        // const projectRef = doc(db, "completed_projects", projectId);
-        // await deleteDoc(projectRef);
-        // currentProjects.value = currentProjects.value.filter(
-        //   (currentProject) => currentProject.id !== projectId
-        // );
-        confirmDelete.value = false;
+        const projectRef = doc(db, "completed_projects", edit_delete_id.value);
+        await deleteDoc(projectRef);
+        currentProjects.value = currentProjects.value.filter(
+          (currentProject) => currentProject.id !== edit_delete_id.value
+        );
+        showConfirmDelete.value = false;
       } catch (error) {
         console.error("Error removing client:", error);
       }
@@ -325,7 +330,7 @@ export default {
       location.value = editProject[0].location;
       completedDate.value = editProject[0].completed_date;
       local_oversea.value = editProject[0].local_oversea;
-      editProjectId.value = editProject[0].id;
+      edit_delete_id.value = editProject[0].id;
 
       //form edit button change
       isEditForm.value = true;
@@ -358,12 +363,13 @@ export default {
       nextPage,
       previousPage,
       totalPages,
+      showConfirmDelete,
       confirmDelete,
       showEditForm,
       isEditForm,
       editProject,
       location,
-      editProjectId,
+      edit_delete_id,
     };
   },
 };
