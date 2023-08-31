@@ -21,7 +21,9 @@
                 v-for="currentEquipment in displayEquipments"
                 :key="currentEquipment.id"
               >
-                <td data-label="Name">{{ currentEquipment.eqpName }}</td>
+                <td data-label="Name">
+                  {{ currentEquipment.eqpName }}
+                </td>
                 <td data-label="Description">
                   {{ currentEquipment.description }}
                 </td>
@@ -33,7 +35,7 @@
                 </td>
                 <td data-label="Edit">
                   <button
-                    @click="confirmDelete = true"
+                    @click="confirmDelete(currentEquipment.id)"
                     class="md:mt-8 px-4 py-2 mx-2 bg-blue-500 text-white rounded hover:bg-blue-600"
                   >
                     Delete
@@ -45,27 +47,28 @@
                     Edit
                   </button>
                 </td>
-                <!-- Pop up -->
-                <div
-                  v-if="confirmDelete"
-                  class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
-                >
-                  <div class="bg-white p-6 rounded shadow-lg">
-                    <h2 class="text-xl font-semibold mb-4">
-                      <button @click="confirmDelete = false" class="">
-                        <i class="fa-solid fa-xmark"></i>
-                      </button>
-                    </h2>
-                    <p class="mb-4">Are you sure you want to delete?</p>
-                    <button
-                      @click="deleteEqp(currentEquipment.id)"
-                      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                    >
-                      Yes, Delete
-                    </button>
-                  </div>
-                </div>
               </tr>
+              <!-- Pop up -->
+              <div
+                v-if="showConfirmDelete"
+                class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+              >
+                <div class="bg-white p-6 rounded shadow-lg">
+                  <h2 class="text-xl font-semibold mb-4">
+                    <button @click="confirmDelete = false" class="">
+                      <i class="fa-solid fa-xmark"></i>
+                    </button>
+                  </h2>
+                  <p class="mb-4">Are you sure you want to delete?</p>
+
+                  <button
+                    @click="deleteEqp()"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  >
+                    Yes, Delete
+                  </button>
+                </div>
+              </div>
             </tbody>
           </table>
           <div class="flex justify-center mt-5">
@@ -177,8 +180,9 @@ export default {
     let eqpName = ref("");
     let description = ref("");
     let imageUrl = ref("");
-    let confirmDelete = ref(false);
+    let showConfirmDelete = ref(false);
     let isEditForm = ref(false);
+    let edit_delete_id = ref("");
 
     //getAllEquipments
     onMounted(async () => {
@@ -207,14 +211,18 @@ export default {
       imageUrl.value = "";
     };
 
-    let deleteEqp = async (eqpId) => {
+    let confirmDelete = (id) => {
+      showConfirmDelete.value = true;
+      edit_delete_id.value = id;
+    };
+    let deleteEqp = async () => {
       try {
-        const eqpRef = doc(db, "equipments", eqpId);
+        const eqpRef = doc(db, "equipments", edit_delete_id.value);
         await deleteDoc(eqpRef);
         currentEquipments.value = currentEquipments.value.filter(
-          (currentEquipment) => currentEquipment.id !== eqpId
+          (currentEquipment) => currentEquipment.id !== edit_delete_id.value
         );
-        confirmDelete.value = false;
+        showConfirmDelete.value = false;
       } catch (error) {
         console.error("Error removing client:", error);
       }
@@ -275,6 +283,8 @@ export default {
       confirmDelete,
       showEditForm,
       isEditForm,
+      showConfirmDelete,
+      confirmDelete,
     };
   },
 };

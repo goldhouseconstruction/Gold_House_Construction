@@ -184,14 +184,21 @@
           </div>
           <div class="flex items-center justify-between">
             <button
+              v-if="!isEditForm"
               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
             >
-              <p v-if="!isEditForm">Add Project</p>
-              <p v-if="isEditForm">Edit Project</p>
+              Add Project
             </button>
           </div>
         </form>
+        <button
+          v-if="isEditForm"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          @click="editProject(editProjectId)"
+        >
+          Edit Project
+        </button>
       </div>
     </div>
   </div>
@@ -207,6 +214,7 @@ import {
   getDocs,
   orderBy,
   Timestamp,
+  updateDoc,
 } from "firebase/firestore";
 import db from "../firebase/init";
 import { computed, onMounted, ref } from "vue";
@@ -221,13 +229,11 @@ export default {
     let completedDate = ref("");
     let confirmDelete = ref(false);
     let isEditForm = ref(false);
+    let editProjectId = ref("");
 
     //getAllEquipments
     onMounted(async () => {
-      const querySnapshot = await getDocs(
-        collection(db, "completed_projects"),
-        orderBy("completed_date", "desc")
-      );
+      const querySnapshot = await getDocs(collection(db, "completed_projects"));
       querySnapshot.forEach((doc) => {
         const ProjectData = { id: doc.id, ...doc.data() };
         currentProjects.value.push(ProjectData);
@@ -248,10 +254,14 @@ export default {
       const projectSnapshot = await getDoc(
         doc(db, "completed_projects", docRef.id)
       );
-      const newProject = { id: docRef.id, ...projectSnapshot.data() };
+      const newProject = {
+        id: docRef.id,
+        ...projectSnapshot.data(),
+      };
 
       // Update the local array currentProject with the new equipment
       currentProjects.value.push(newProject);
+      console.log(currentProjects.value);
 
       // Clear the input values after adding
       projectName.value = "";
@@ -264,11 +274,12 @@ export default {
 
     let deleteProject = async (projectId) => {
       try {
-        const projectRef = doc(db, "completed_project", projectId);
-        await deleteDoc(projectRef);
-        currentProjects.value = currentProjects.value.filter(
-          (currentProject) => currentProject.id !== projectId
-        );
+        console.log(projectId);
+        // const projectRef = doc(db, "completed_projects", projectId);
+        // await deleteDoc(projectRef);
+        // currentProjects.value = currentProjects.value.filter(
+        //   (currentProject) => currentProject.id !== projectId
+        // );
         confirmDelete.value = false;
       } catch (error) {
         console.error("Error removing client:", error);
@@ -302,7 +313,7 @@ export default {
     };
     //pagination
 
-    //Edit Equipments
+    //Edit Project
     let showEditForm = (id) => {
       let editProject = currentProjects.value.filter((project) => {
         return project.id === id;
@@ -311,9 +322,27 @@ export default {
       projectName.value = editProject[0].project_name;
       description.value = editProject[0].description;
       imageUrl.value = editProject[0].imageUrl;
+      location.value = editProject[0].location;
+      completedDate.value = editProject[0].completed_date;
+      local_oversea.value = editProject[0].local_oversea;
+      editProjectId.value = editProject[0].id;
 
       //form edit button change
       isEditForm.value = true;
+    };
+
+    let editProject = async (id) => {
+      const editRef = doc(db, "completed_projects", id);
+      const formattedDate = new Date(completedDate.value);
+      const timestamp = Timestamp.fromDate(formattedDate);
+      await updateDoc(editRef, {
+        project_name: projectName.value,
+        description: description.value,
+        imageUrl: imageUrl.value,
+        location: location.value,
+        completed_date: timestamp,
+        local_oversea: local_oversea.value,
+      });
     };
     return {
       currentProjects,
@@ -332,7 +361,9 @@ export default {
       confirmDelete,
       showEditForm,
       isEditForm,
+      editProject,
       location,
+      editProjectId,
     };
   },
 };
