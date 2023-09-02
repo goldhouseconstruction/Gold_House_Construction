@@ -71,6 +71,7 @@ export default {
 }
 .navFrame {
   @apply flex justify-between items-center px-10 py-2 bg-[#ffff] fixed top-0 w-full bg-white shadow-lg;
+  z-index: 999;
 }
 .navList {
   @apply text-black cursor-pointer;

@@ -8,9 +8,12 @@
     "watch": "tailwind build -i src/style.css -o public/tailwind.css -w"
   },
   "dependencies": {
+    "animate.css": "^4.1.1",
+    "aos": "^2.3.4",
     "core-js": "^3.8.3",
     "firebase": "^10.2.0",
     "vue": "^3.2.13",
+    "vue-animate-onscroll": "^1.0.8",
     "vue-router": "^4.0.3"
   },
   "devDependencies": {

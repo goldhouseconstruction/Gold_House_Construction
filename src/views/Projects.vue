@@ -2,6 +2,7 @@
   <HeroforProjects />
 
   <!-- Project Section -->
+
   <div class="w-[80%] mx-auto mt-10" id="projects">
     <h1 class="text-center text-2xl text-[#D98106]">Latest Projects</h1>
     <FilterNav></FilterNav>
@@ -16,10 +17,12 @@
         >
           <div
             class="max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden"
+            data-aos="fade-up"
+            data-aos-duration="1000"
           >
             <img
               class="w-full h-48 object-cover"
-              src="../../public/img/excavator.png"
+              :src="completedProject.imageUrl"
               alt="Project Image"
             />
             <div class="p-4">

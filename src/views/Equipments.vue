@@ -2,7 +2,6 @@
   <div class="mt-[8rem] mb-[6rem]">
     <h1 class="text-xl text-center my-10 font-bold">Our Equipments</h1>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mx-10">
-      <!-- Card 1 -->
       <div
         class="bg-white rounded-lg overflow-hidden shadow-md my-[2rem]"
         v-for="Equipment in allEquipments"
@@ -25,8 +24,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Add more cards here -->
     </div>
   </div>
 </template>

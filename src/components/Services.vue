@@ -6,7 +6,7 @@
   <!-- First Row -->
   <div class="container mx-auto px-4 my-10">
     <div class="firstrowResponsive">
-      <div class="p-4 flex">
+      <div class="p-4 flex" data-aos="fade-right" data-aos-duration="1000">
         <div class="w-30">
           <img
             src="../../public/img/highway.png"
@@ -25,7 +25,7 @@
           </p>
         </div>
       </div>
-      <div class="p-4 flex">
+      <div class="p-4 flex" data-aos="fade-right" data-aos-duration="1000">
         <div class="w-30">
           <img
             src="../../public/img/municipal.png"
@@ -44,7 +44,7 @@
           </p>
         </div>
       </div>
-      <div class="p-4 flex">
+      <div class="p-4 flex" data-aos="fade-right" data-aos-duration="1000">
         <div class="w-30">
           <img
             src="../../public/img/housing.png"
@@ -68,7 +68,7 @@
   <!-- Second Row -->
   <div class="container sm:w-[60%] px-4 mx-auto mb-[65px]">
     <div class="secondrowResponsive">
-      <div class="p-4 flex">
+      <div class="p-4 flex" data-aos="fade-left" data-aos-duration="1000">
         <div class="w-30">
           <img
             src="../../public/img/bridge.png"
@@ -87,7 +87,7 @@
           </p>
         </div>
       </div>
-      <div class="p-4 flex">
+      <div class="p-4 flex" data-aos="fade-left" data-aos-duration="1000">
         <div class="w-30">
           <img
             src="../../public/img/metrology.png"
