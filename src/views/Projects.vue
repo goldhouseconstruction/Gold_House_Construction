@@ -5,14 +5,17 @@
 
   <div class="w-[80%] mx-auto mt-10" id="projects">
     <h1 class="text-center text-2xl text-[#D98106]">Latest Projects</h1>
-    <FilterNav></FilterNav>
+    <FilterNav
+      :selectedCategory="selectedCategory"
+      @filter-projects="filterProjects"
+    ></FilterNav>
 
     <div class="projectsSec">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <!-- Column 1 -->
         <div
           class="p-4"
-          v-for="completedProject in allcompletedProjects"
+          v-for="completedProject in filteredProjects"
           :key="completedProject.id"
         >
           <div
@@ -49,9 +52,8 @@
 </template>
 
 <script>
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import FilterNav from "../components/filterNav";
-
 import HeroforProjects from "../components/HeroforProjects";
 import { collection, getDocs, orderBy } from "firebase/firestore";
 import db from "@/firebase/init";
@@ -62,6 +64,7 @@ export default {
   },
   setup() {
     let allcompletedProjects = ref([]);
+    let selectedCategory = ref("all");
     //getAllEquipments
     onMounted(async () => {
       const querySnapshot = await getDocs(
@@ -82,7 +85,29 @@ export default {
         allcompletedProjects.value.push(ProjectData);
       });
     });
-    return { allcompletedProjects };
+
+    //filter local, oversea
+    let filterProjects = (category) => {
+      selectedCategory.value = category;
+    };
+
+    const filteredProjects = computed(() => {
+      if (selectedCategory.value === "all") {
+        // If 'All' is selected, return allcompletedProjects as is
+        return allcompletedProjects.value;
+      } else {
+        // Filter projects based on the selected category
+        return allcompletedProjects.value.filter(
+          (project) => project.local_oversea === selectedCategory.value
+        );
+      }
+    });
+    return {
+      allcompletedProjects,
+      selectedCategory,
+      filterProjects,
+      filteredProjects,
+    };
   },
 };
 </script>
