@@ -218,6 +218,7 @@ import {
 } from "firebase/firestore";
 import db from "../firebase/init";
 import { computed, onMounted, ref } from "vue";
+import timeStamptoSting from "@/composables/timeStamptoString";
 export default {
   setup() {
     let currentProjects = ref([]);
@@ -240,18 +241,21 @@ export default {
       querySnapshot.forEach((doc) => {
         const completedDateTimestamp = doc.data().completed_date;
         const completedDate = completedDateTimestamp.toDate();
-        // Get year, month, and day
-        const year = completedDate.getFullYear();
-        const month = String(completedDate.getMonth() + 1).padStart(2, "0");
-        const day = String(completedDate.getDate()).padStart(2, "0");
+        let formattedDate = timeStamptoSting(completedDate);
+        // // Get year, month, and day
+        // const year = completedDate.getFullYear();
+        // const month = String(completedDate.getMonth() + 1).padStart(2, "0");
+        // const day = String(completedDate.getDate()).padStart(2, "0");
 
-        // Format the date as yyyy-MM-dd
-        const formattedDate = `${year}-${month}-${day}`;
+        // // Format the date as yyyy-MM-dd
+        // const formattedDate = `${year}-${month}-${day}`;
+
         const ProjectData = {
           id: doc.id,
           ...doc.data(),
           completed_date: formattedDate,
         };
+
         currentProjects.value.push(ProjectData);
       });
     });
@@ -364,16 +368,26 @@ export default {
       const index = currentProjects.value.findIndex(
         (currentProject) => currentProject.id === id
       );
+      let DataSting = timeStamptoSting(formattedDate);
       if (index !== -1) {
         currentProjects.value[index] = {
           project_name: projectName.value,
           description: description.value,
           imageUrl: imageUrl.value,
           location: location.value,
-          completed_date: timestamp,
+          completed_date: DataSting,
           local_oversea: local_oversea.value,
+          id: id, //this is add id manually to local array because, only onmounted  will add id with object destruction
         };
       }
+
+      //clear form input after edit
+      projectName.value = "";
+      description.value = "";
+      imageUrl.value = "";
+      location.value = "";
+      completedDate.value = "";
+      isEditForm.value = false;
     };
     return {
       currentProjects,

@@ -152,12 +152,19 @@
             <button
               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
+              v-if="!isEditForm"
             >
-              <p v-if="!isEditForm">Add Equipment</p>
-              <p v-if="isEditForm">Edit Equipment</p>
+              <p>Add Equipment</p>
             </button>
           </div>
         </form>
+        <button
+          v-if="isEditForm"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          @click="editEquipment(edit_delete_id)"
+        >
+          Edit Project
+        </button>
       </div>
     </div>
   </div>
@@ -171,6 +178,7 @@ import {
   doc,
   getDoc,
   getDocs,
+  updateDoc,
 } from "firebase/firestore";
 import db from "../firebase/init";
 import { computed, onMounted, ref } from "vue";
@@ -264,9 +272,38 @@ export default {
       eqpName.value = editEquipment[0].eqpName;
       description.value = editEquipment[0].description;
       imageUrl.value = editEquipment[0].imageUrl;
+      edit_delete_id.value = editEquipment[0].id;
 
       //form edit button change
       isEditForm.value = true;
+    };
+
+    let editEquipment = async (id) => {
+      const editRef = doc(db, "equipments", id);
+      await updateDoc(editRef, {
+        eqpName: eqpName.value,
+        description: description.value,
+        imageUrl: imageUrl.value,
+      });
+      const index = currentEquipments.value.findIndex(
+        (currentEquipment) => currentEquipment.id === id
+      );
+
+      if (index !== -1) {
+        currentEquipments.value[index] = {
+          eqpName: eqpName.value,
+          description: description.value,
+          imageUrl: imageUrl.value,
+          id: id, //this is add id manually to local array because, only onmounted  will add id with object destruction
+        };
+
+        //clear form after edit
+        eqpName.value = "";
+        description.value = "";
+        imageUrl.value = "";
+        edit_delete_id.value = "";
+      }
+      isEditForm.value = false;
     };
     return {
       currentEquipments,
@@ -285,6 +322,8 @@ export default {
       isEditForm,
       showConfirmDelete,
       confirmDelete,
+      editEquipment,
+      edit_delete_id,
     };
   },
 };

@@ -51,7 +51,7 @@
 <script>
 import { onMounted, ref } from "vue";
 import FilterNav from "../components/filterNav";
-import timeStamptoString from "../composables/timeStamptoString";
+
 import HeroforProjects from "../components/HeroforProjects";
 import { collection, getDocs, orderBy } from "firebase/firestore";
 import db from "@/firebase/init";
