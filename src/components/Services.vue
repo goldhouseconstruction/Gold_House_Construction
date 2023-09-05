@@ -4,7 +4,7 @@
     <div class="yellowLine"></div>
   </div>
   <!-- First Row -->
-  <div class="container mx-auto px-4 my-10">
+  <div class="firstRow">
     <div class="firstrowResponsive">
       <div class="p-4 flex" data-aos="fade-right" data-aos-duration="1000">
         <div class="w-30">
@@ -17,7 +17,7 @@
         </div>
 
         <div class="w-70 px-4">
-          <h1 class="text-xl mb-2 font-bold">Highway Engineering</h1>
+          <h1 class="serviceHeading">Highway Engineering</h1>
           <p class="text-sm">
             We do highway projects with expertise in engineering design and
             testing, delivering safe, innovative, and precise solutions
@@ -36,7 +36,7 @@
         </div>
 
         <div class="w-70 px-4">
-          <h1 class="text-xl mb-2 font-bold">Municipal Engineering</h1>
+          <h1 class="serviceHeading">Municipal Engineering</h1>
           <p class="text-sm">
             We offer comprehensive Municipal Engineering services, encompassing
             planning, design, and implementation, to build sustainable and
@@ -55,7 +55,7 @@
         </div>
 
         <div class="w-70 px-4">
-          <h1 class="text-xl mb-2 font-bold">Housing Construction</h1>
+          <h1 class="serviceHeading">Housing Construction</h1>
           <p class="text-sm">
             We specialize in Housing Construction, creating exceptional homes
             with quality craftsmanship and attention to detail, tailored to your
@@ -66,7 +66,7 @@
     </div>
   </div>
   <!-- Second Row -->
-  <div class="container sm:w-[60%] px-4 mx-auto mb-[65px]">
+  <div class="secondRow">
     <div class="secondrowResponsive">
       <div class="p-4 flex" data-aos="fade-left" data-aos-duration="1000">
         <div class="w-30">
@@ -79,7 +79,7 @@
         </div>
 
         <div class="w-70 px-4">
-          <h1 class="text-xl mb-2 font-bold">Bridge Engineering</h1>
+          <h1 class="serviceHeading">Bridge Engineering</h1>
           <p class="text-sm">
             We excel in designing, constructing, and inspecting bridges,
             ensuring durability, safety, and seamless integration into
@@ -98,7 +98,7 @@
         </div>
 
         <div class="w-70 px-4">
-          <h1 class="text-xl mb-2 font-bold">Engineering Metrology</h1>
+          <h1 class="serviceHeading">Engineering Metrology</h1>
           <p class="text-sm">
             We provide Quality Management Certificates, ensuring top-notch
             precision and excellence in all measurements.
@@ -122,10 +122,23 @@ export default {};
   @apply w-[150px] h-1 bg-yellow-400;
 }
 
+/* firstrow */
 .firstrowResponsive {
   @apply grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3;
 }
+.firstRow {
+  @apply container mx-auto px-4 my-10;
+}
+
+/* secondrow */
 .secondrowResponsive {
   @apply grid gap-4 grid-cols-1 sm:grid-cols-2;
+}
+.secondRow {
+  @apply container sm:w-[60%] px-4 mx-auto mb-[65px];
+}
+
+.serviceHeading {
+  @apply text-xl mb-2 font-bold;
 }
 </style>

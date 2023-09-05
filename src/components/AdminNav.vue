@@ -1,21 +1,21 @@
 <template>
-  <div class="bg-[#f2f2f2] text-black mt-[4rem] mb-10">
-    <div class="p-4 text-center">
+  <div class="NavContainer">
+    <div class="heading">
       <h2 class="text-xl font-semibold mb-4">Admin Dashboard</h2>
 
       <p>
-        <router-link to="/dashboard/clients" class="block py-2"
+        <router-link to="/dashboard/clients" class="routerlink"
           >Clients</router-link
         >
       </p>
 
       <p>
-        <router-link to="/dashboard/equipments" class="block py-2"
+        <router-link to="/dashboard/equipments" class="routerlink"
           >Edit Equipments</router-link
         >
       </p>
       <p>
-        <router-link to="/dashboard/projects" class="block py-2"
+        <router-link to="/dashboard/projects" class="routerlink"
           >Edit Projects</router-link
         >
       </p>
@@ -47,4 +47,14 @@ export default {
   },
 };
 </script>
-<style></style>
+<style>
+.NavContainer {
+  @apply bg-[#f2f2f2] text-black mt-[4rem] mb-10;
+}
+.heading {
+  @apply p-4 text-center;
+}
+.routerlink {
+  @apply block py-2;
+}
+</style>

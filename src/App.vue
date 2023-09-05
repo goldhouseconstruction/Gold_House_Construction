@@ -1,7 +1,8 @@
 <template>
   <Navbar />
-  <Sidenav v-if="isDashboardRoute" />
-
+  <!-- dashboard navigation -->
+  <AdminNav v-if="isDashboardRoute" />
+  <!-- dashboard navigation -->
   <router-view />
   <Footer></Footer>
 </template>
@@ -11,12 +12,12 @@ import { computed } from "vue";
 import { useRoute } from "vue-router";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
-import Sidenav from "./components/Sidenav.vue";
+import AdminNav from "./components/AdminNav.vue";
 export default {
   components: {
     Footer,
     Navbar,
-    Sidenav,
+    AdminNav,
   },
   setup() {
     let route = useRoute();
