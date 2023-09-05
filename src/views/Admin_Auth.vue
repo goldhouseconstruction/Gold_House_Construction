@@ -8,7 +8,7 @@
           id="email"
           name="email"
           v-model="email"
-          class="w-full px-3 py-2 border rounded"
+          class="formInput"
         />
         <label for="email" class="block mb-2">Password </label>
         <input
@@ -16,7 +16,7 @@
           id="password"
           name="password"
           v-model="password"
-          class="w-full px-3 py-2 border rounded"
+          class="formInput"
         />
         <p v-if="error" class="err">{{ error }}</p>
         <button
@@ -88,5 +88,8 @@ export default {
 }
 .card {
   @apply bg-white rounded-lg overflow-hidden shadow-md w-[50%] mx-auto p-5;
+}
+.formInput {
+  @apply w-full px-3 py-2 border rounded;
 }
 </style>

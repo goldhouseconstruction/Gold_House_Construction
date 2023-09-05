@@ -47,12 +47,9 @@
                 </td>
               </tr>
               <!-- Pop up -->
-              <div
-                v-if="showConfirmDelete"
-                class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
-              >
-                <div class="bg-white p-6 rounded shadow-lg">
-                  <h2 class="text-xl font-semibold mb-4">
+              <div v-if="showConfirmDelete" class="confirmDeletePopup">
+                <div class="confirmDeleteCard">
+                  <h2 class="confirmDeleteHeading">
                     <button @click="showConfirmDelete = false" class="">
                       <i class="fa-solid fa-xmark"></i>
                     </button>
@@ -89,26 +86,14 @@
     </div>
     <!-- Add, Edit Form -->
     <div class="md:w-1/2 p-4 my-auto">
-      <div class="max-w-md mx-auto p-4">
-        <form
-          class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-          @submit.prevent="addProject"
-        >
-          <h1 v-if="!isEditForm" class="text-center text-xl my-3 underline">
-            Add New Project
-          </h1>
-          <h1 v-if="isEditForm" class="text-center text-xl my-3 underline">
-            Edit Project
-          </h1>
+      <div class="formCard">
+        <form class="form" @submit.prevent="addProject">
+          <h1 v-if="!isEditForm" class="formHeading">Add New Project</h1>
+          <h1 v-if="isEditForm" class="formHeading">Edit Project</h1>
           <div class="mb-4">
-            <label
-              class="block text-gray-700 text-sm font-bold mb-2"
-              for="projectName"
-            >
-              Project Name
-            </label>
+            <label class="formLabel" for="projectName"> Project Name </label>
             <input
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              class="formInput"
               id="projectName"
               type="text"
               v-model="projectName"
@@ -116,14 +101,9 @@
             />
           </div>
           <div class="mb-4">
-            <label
-              class="block text-gray-700 text-sm font-bold mb-2"
-              for="description"
-            >
-              Description
-            </label>
+            <label class="formLabel" for="description"> Description </label>
             <textarea
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              class="formInput"
               id="description"
               rows="4"
               v-model="description"
@@ -131,14 +111,9 @@
             ></textarea>
           </div>
           <div class="mb-4">
-            <label
-              class="block text-gray-700 text-sm font-bold mb-2"
-              for="imageUrl"
-            >
-              Image URL
-            </label>
+            <label class="formLabel" for="imageUrl"> Image URL </label>
             <input
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              class="formInput"
               id="imageUrl"
               type="text"
               v-model="imageUrl"
@@ -146,14 +121,9 @@
             />
           </div>
           <div class="mb-4">
-            <label
-              class="block text-gray-700 text-sm font-bold mb-2"
-              for="location"
-            >
-              Location
-            </label>
+            <label class="formLabel" for="location"> Location </label>
             <input
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              class="formInput"
               id="location"
               type="text"
               v-model="location"
@@ -161,14 +131,11 @@
             />
           </div>
           <div class="mb-4">
-            <label
-              class="block text-gray-700 text-sm font-bold mb-2"
-              for="completed_date"
-            >
+            <label class="formLabel" for="completed_date">
               Completed Date
             </label>
             <input
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              class="formInput"
               id="completed_date"
               type="date"
               v-model="completedDate"
@@ -507,5 +474,33 @@ table th {
 /* general styling */
 body {
   line-height: 1.25;
+}
+
+/* Confirm Delete Popup */
+.confirmDeletePopup {
+  @apply fixed inset-0 flex items-center justify-center bg-black bg-opacity-50;
+}
+.confirmDeleteCard {
+  @apply bg-white p-6 rounded shadow-lg;
+}
+.confirmDeleteHeading {
+  @apply text-xl font-semibold mb-4;
+}
+
+/* Form */
+.formCard {
+  @apply max-w-md mx-auto p-4;
+}
+.form {
+  @apply bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4;
+}
+.formHeading {
+  @apply text-center text-xl my-3 underline;
+}
+.formLabel {
+  @apply block text-gray-700 text-sm font-bold mb-2;
+}
+.formInput {
+  @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none;
 }
 </style>

@@ -1,9 +1,9 @@
 <template>
   <div class="mt-[8rem] mb-[6rem]">
-    <h1 class="text-xl text-center my-10 font-bold">Our Equipments</h1>
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mx-10">
+    <h1 class="equipmentHeading">Our Equipments</h1>
+    <div class="layout">
       <div
-        class="bg-white rounded-lg overflow-hidden shadow-md my-[2rem]"
+        class="eqpCard"
         v-for="Equipment in allEquipments"
         :key="Equipment.id"
       >
@@ -48,4 +48,14 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.equipmentHeading {
+  @apply text-xl text-center my-10 font-bold;
+}
+.layout {
+  @apply grid grid-cols-1 sm:grid-cols-2 gap-4 mx-10;
+}
+.eqpCard {
+  @apply bg-white rounded-lg overflow-hidden shadow-md my-[2rem];
+}
+</style>

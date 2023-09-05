@@ -36,25 +36,23 @@
                 <td data-label="Edit">
                   <button
                     @click="confirmDelete(currentEquipment.id)"
-                    class="md:mt-8 px-4 py-2 mx-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                    class="editBtn"
                   >
                     Delete
                   </button>
                   <button
                     @click="showEditForm(currentEquipment.id)"
-                    class="md:mt-8 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                    class="editBtn"
                   >
                     Edit
                   </button>
                 </td>
               </tr>
+
               <!-- Pop up -->
-              <div
-                v-if="showConfirmDelete"
-                class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
-              >
-                <div class="bg-white p-6 rounded shadow-lg">
-                  <h2 class="text-xl font-semibold mb-4">
+              <div v-if="showConfirmDelete" class="confirmDeletePopup">
+                <div class="confirmDeleteCard">
+                  <h2 class="confirmDeleteHeading">
                     <button @click="showConfirmDelete = false" class="">
                       <i class="fa-solid fa-xmark"></i>
                     </button>
@@ -75,14 +73,14 @@
             <button
               @click="previousPage"
               v-if="currentPage > 1"
-              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-2 rounded focus:outline-none focus:shadow-outline"
+              class="bg-blue-500 hover:bg-blue-700 text-white formBtn"
             >
               Previous
             </button>
             <button
               @click="nextPage"
               v-if="currentPage < totalPages"
-              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              class="bg-blue-500 hover:bg-blue-700 text-white formBtn"
             >
               Next
             </button>
@@ -90,28 +88,19 @@
         </div>
       </div>
     </div>
+
     <!-- Add, Edit Form -->
     <div class="md:w-1/2 p-4 my-auto">
-      <div class="max-w-md mx-auto p-4">
-        <form
-          class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-          @submit.prevent="addEquipment"
-        >
-          <h1 v-if="!isEditForm" class="text-center text-xl my-3 underline">
-            Add New Equipment
-          </h1>
-          <h1 v-if="isEditForm" class="text-center text-xl my-3 underline">
-            Edit Equipment
-          </h1>
+      <div class="formCard">
+        <form class="form" @submit.prevent="addEquipment">
+          <h1 v-if="!isEditForm" class="formHeading">Add New Equipment</h1>
+          <h1 v-if="isEditForm" class="formHeading">Edit Equipment</h1>
           <div class="mb-4">
-            <label
-              class="block text-gray-700 text-sm font-bold mb-2"
-              for="equipmentName"
-            >
+            <label class="formLabel" for="equipmentName">
               Equipment Name
             </label>
             <input
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              class="formInput"
               id="equipmentName"
               type="text"
               v-model="eqpName"
@@ -119,14 +108,9 @@
             />
           </div>
           <div class="mb-4">
-            <label
-              class="block text-gray-700 text-sm font-bold mb-2"
-              for="description"
-            >
-              Description
-            </label>
+            <label class="formLabel" for="description"> Description </label>
             <textarea
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              class="formInput"
               id="description"
               rows="4"
               v-model="description"
@@ -134,14 +118,9 @@
             ></textarea>
           </div>
           <div class="mb-4">
-            <label
-              class="block text-gray-700 text-sm font-bold mb-2"
-              for="imageUrl"
-            >
-              Image URL
-            </label>
+            <label class="formLabel" for="imageUrl"> Image URL </label>
             <input
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              class="formInput"
               id="imageUrl"
               type="text"
               v-model="imageUrl"
@@ -150,7 +129,7 @@
           </div>
           <div class="flex items-center justify-between">
             <button
-              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              class="bg-blue-500 hover:bg-blue-700 text-white formBtn"
               type="submit"
               v-if="!isEditForm"
             >
@@ -160,7 +139,7 @@
         </form>
         <button
           v-if="isEditForm"
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          class="bg-blue-500 hover:bg-blue-700 text-white formBtn"
           @click="editEquipment(edit_delete_id)"
         >
           Edit Project
@@ -330,6 +309,9 @@ export default {
 </script>
 
 <style>
+body {
+  line-height: 1.25;
+}
 .table-container {
   @apply w-[90%] mx-auto;
 }
@@ -417,9 +399,38 @@ table th {
     border-bottom: 0;
   }
 }
+.editBtn {
+  @apply md:mt-8 px-4 py-2 mx-2 bg-blue-500 text-white rounded hover:bg-blue-600;
+}
 
-/* general styling */
-body {
-  line-height: 1.25;
+/* confirmDeletePopup */
+.confirmDeletePopup {
+  @apply fixed inset-0 flex items-center justify-center bg-black bg-opacity-50;
+}
+.confirmDeleteCard {
+  @apply bg-white p-6 rounded shadow-lg;
+}
+.confirmDeleteHeading {
+  @apply text-xl font-semibold mb-4;
+}
+
+/* Add Edit Form */
+.formCard {
+  @apply max-w-md mx-auto p-4;
+}
+.form {
+  @apply bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4;
+}
+.formHeading {
+  @apply text-center text-xl my-3 underline;
+}
+.formLabel {
+  @apply block text-gray-700 text-sm font-bold mb-2;
+}
+.formInput {
+  @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none;
+}
+.formBtn {
+  @apply font-bold py-2 px-4 rounded focus:outline-none;
 }
 </style>

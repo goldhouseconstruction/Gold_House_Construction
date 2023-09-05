@@ -1,8 +1,8 @@
 <template>
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-[8rem]">
-    <!-- Column 1 -->
-    <div class="p-4 w-[70%] mx-auto">
-      <h2 class="text-center text-xl my-5">Contact Us</h2>
+  <div class="contactusSection">
+    <!-- Contact Us -->
+    <div class="contactUs">
+      <h2 class="contactusHeading">Contact Us</h2>
       <a href="https://goo.gl/maps/a9wotcA555WbCvJb8">
         <p>
           Our Address is <br />
@@ -27,8 +27,8 @@
       </div>
     </div>
 
-    <!-- Column 2 -->
-    <div class="p-4 w-[70%] mx-auto">
+    <!-- Form -->
+    <div class="contactusForm">
       <form @submit.prevent="saveClientMessage">
         <p class="text-xl my-5">
           Please Fill your contact info. We will contact you back ASAP.
@@ -62,7 +62,8 @@
     </div>
   </div>
 
-  <div class="w-[80%] mx-auto my-10">
+  <!-- Map -->
+  <div class="mapCard">
     <iframe
       src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3819.0115677829485!2d96.18556697533677!3d16.82578221874057!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30c193721adb815f%3A0x4553ec00e9a37552!2sThumingalar%20Housing!5e0!3m2!1sth!2sth!4v1692451701623!5m2!1sth!2sth"
       width="100%"
@@ -75,7 +76,6 @@
   </div>
 
   <!-- Popup -->
-
   <div
     v-if="showPopup"
     class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
@@ -123,7 +123,25 @@ export default {
 </script>
 
 <style>
+/* contactus section */
+.contactusSection {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-4 mt-[8rem];
+}
+.contactUs {
+  @apply p-4 w-[70%] mx-auto;
+}
+.contactusHeading {
+  @apply text-center text-xl my-5;
+}
+.contactusForm {
+  @apply p-4 w-[70%] mx-auto;
+}
 .socials i {
   @apply px-1;
+}
+
+/* map */
+.mapCard {
+  @apply w-[80%] mx-auto my-10;
 }
 </style>

@@ -12,7 +12,7 @@ import { computed } from "vue";
 import { useRoute } from "vue-router";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
-import AdminNav from "./components/AdminNav.vue";
+import AdminNav from "./components/AdminNav";
 export default {
   components: {
     Footer,
@@ -20,6 +20,7 @@ export default {
     AdminNav,
   },
   setup() {
+    //check dashboard route or not
     let route = useRoute();
     const isDashboardRoute = computed(() =>
       route.path.startsWith("/dashboard")

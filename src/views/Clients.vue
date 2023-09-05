@@ -1,5 +1,5 @@
 <template>
-  <div v-if="clients.length === 0" class="card bg-white p-6 rounded shadow-md">
+  <div v-if="clients.length === 0" class="card">
     There are no clients we have to contact back.
   </div>
   <div class="table-container" v-if="clients.length">
@@ -71,6 +71,16 @@ export default {
 </script>
 
 <style scoped>
+.card {
+  @apply bg-white p-6 rounded shadow-md;
+  background-color: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 100px auto;
+  text-align: center;
+}
+
+/* table */
 .table-container {
   @apply bg-white rounded shadow;
 
@@ -161,13 +171,6 @@ table th {
 /* general styling */
 body {
   line-height: 1.25;
-}
-.card {
-  background-color: #ffffff;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin: 100px auto;
-  text-align: center;
 }
 
 .btn {
