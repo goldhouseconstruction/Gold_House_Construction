@@ -3,7 +3,7 @@ import { collection, getDocs, orderBy } from "firebase/firestore";
 import timeStamptoSting from "./timeStamptoString";
 import { ref } from "vue";
 
-let fetchAll = async (collectionName) => {
+let fetchAllProjects = async (collectionName) => {
   let allDatas = ref([]);
   const querySnapshot = await getDocs(
     collection(db, collectionName),
@@ -26,4 +26,4 @@ let fetchAll = async (collectionName) => {
   return allDatas.value;
 };
 
-export default fetchAll;
+export default fetchAllProjects;

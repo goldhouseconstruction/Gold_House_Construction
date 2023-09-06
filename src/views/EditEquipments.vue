@@ -160,6 +160,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import db from "../firebase/init";
+import fetchAllEquipments from "@/composables/fetchAllEquipments";
 import { computed, onMounted, ref } from "vue";
 export default {
   setup() {
@@ -173,11 +174,8 @@ export default {
 
     //getAllEquipments
     onMounted(async () => {
-      const querySnapshot = await getDocs(collection(db, "equipments"));
-      querySnapshot.forEach((doc) => {
-        const EquipmentData = { id: doc.id, ...doc.data() };
-        currentEquipments.value.push(EquipmentData);
-      });
+      let allDatas = await fetchAllEquipments("equipments");
+      currentEquipments.value = allDatas;
     });
     let addEquipment = async () => {
       const docRef = await addDoc(collection(db, "equipments"), {
