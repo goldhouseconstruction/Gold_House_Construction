@@ -183,6 +183,7 @@ import {
 } from "firebase/firestore";
 import db from "../firebase/init";
 import fetchAllProjects from "../composables/fetchAllProjects";
+import addNewProject from "@/composables/addNewProject";
 import { computed, onMounted, ref } from "vue";
 import timeStamptoSting from "@/composables/timeStamptoString";
 export default {
@@ -207,25 +208,16 @@ export default {
     let addProject = async () => {
       const formattedDate = new Date(completedDate.value);
       const timestamp = Timestamp.fromDate(formattedDate);
-      const docRef = await addDoc(collection(db, "completed_projects"), {
+      let newProjectData = {
         project_name: projectName.value,
         description: description.value,
         imageUrl: imageUrl.value,
         location: location.value,
         completed_date: timestamp,
         local_oversea: local_oversea.value,
-      });
-      // Fetch the newly added equipment from Firestore using the docRef
-      const projectSnapshot = await getDoc(
-        doc(db, "completed_projects", docRef.id)
-      );
-      const newProject = {
-        id: docRef.id,
-        ...projectSnapshot.data(),
       };
-
-      // Update the local array currentProject with the new equipment
-      currentProjects.value.push(newProject);
+      let newProject = await addNewProject(newProjectData); //add new project with composable function
+      currentProjects.value.unshift(newProject); //add new project to local array
 
       // Clear the input values after adding
       projectName.value = "";
@@ -235,11 +227,12 @@ export default {
       completedDate.value = "";
       local_oversea.value = "";
     };
-
+    //show confirm delete popup
     let confirmDelete = (id) => {
       edit_delete_id.value = id;
       showConfirmDelete.value = true;
     };
+    //delete function
     let deleteProject = async () => {
       try {
         const projectRef = doc(db, "completed_projects", edit_delete_id.value);
@@ -253,34 +246,7 @@ export default {
       }
     };
 
-    //pagination
-    const pageSize = 4;
-    const currentPage = ref(1);
-
-    const totalPages = computed(() =>
-      Math.ceil(currentProjects.value.length / pageSize)
-    );
-
-    const displayProjects = computed(() => {
-      const startIndex = (currentPage.value - 1) * pageSize;
-      const endIndex = startIndex + pageSize;
-      return currentProjects.value.slice(startIndex, endIndex);
-    });
-
-    const nextPage = () => {
-      if (currentPage.value < totalPages.value) {
-        currentPage.value++;
-      }
-    };
-
-    const previousPage = () => {
-      if (currentPage.value > 1) {
-        currentPage.value--;
-      }
-    };
-    //pagination
-
-    //Edit Project
+    //show edit project form
     let showEditForm = (id) => {
       let editProject = currentProjects.value.filter((project) => {
         return project.id === id;
@@ -297,7 +263,7 @@ export default {
       //form edit button change
       isEditForm.value = true;
     };
-
+    //Edit Project
     let editProject = async (id) => {
       const editRef = doc(db, "completed_projects", id);
       const formattedDate = new Date(completedDate.value);
@@ -334,6 +300,33 @@ export default {
       completedDate.value = "";
       isEditForm.value = false;
     };
+
+    //pagination
+    const pageSize = 4;
+    const currentPage = ref(1);
+
+    const totalPages = computed(() =>
+      Math.ceil(currentProjects.value.length / pageSize)
+    );
+
+    const displayProjects = computed(() => {
+      const startIndex = (currentPage.value - 1) * pageSize;
+      const endIndex = startIndex + pageSize;
+      return currentProjects.value.slice(startIndex, endIndex);
+    });
+
+    const nextPage = () => {
+      if (currentPage.value < totalPages.value) {
+        currentPage.value++;
+      }
+    };
+
+    const previousPage = () => {
+      if (currentPage.value > 1) {
+        currentPage.value--;
+      }
+    };
+    //pagination
     return {
       currentProjects,
       projectName,

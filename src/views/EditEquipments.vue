@@ -178,6 +178,7 @@ export default {
       let allDatas = await fetchAllEquipments("equipments"); //fetch all equipments with composable function
       currentEquipments.value = allDatas; //add to local array
     });
+    //Add New Equipment
     let addEquipment = async () => {
       let newEqpData = {
         eqpName: eqpName.value,
@@ -212,34 +213,7 @@ export default {
       }
     };
 
-    //pagination
-    const pageSize = 4;
-    const currentPage = ref(1);
-
-    const totalPages = computed(() =>
-      Math.ceil(currentEquipments.value.length / pageSize)
-    );
-
-    const displayEquipments = computed(() => {
-      const startIndex = (currentPage.value - 1) * pageSize;
-      const endIndex = startIndex + pageSize;
-      return currentEquipments.value.slice(startIndex, endIndex);
-    });
-
-    const nextPage = () => {
-      if (currentPage.value < totalPages.value) {
-        currentPage.value++;
-      }
-    };
-
-    const previousPage = () => {
-      if (currentPage.value > 1) {
-        currentPage.value--;
-      }
-    };
-    //pagination
-
-    //Edit Equipments
+    //show edit equipment form
     let showEditForm = (id) => {
       let editEquipment = currentEquipments.value.filter((equipment) => {
         return equipment.id === id;
@@ -254,6 +228,7 @@ export default {
       isEditForm.value = true;
     };
 
+    //Edit Equipments
     let editEquipment = async (id) => {
       const editRef = doc(db, "equipments", id);
       await updateDoc(editRef, {
@@ -281,6 +256,33 @@ export default {
       }
       isEditForm.value = false;
     };
+
+    //pagination
+    const pageSize = 4;
+    const currentPage = ref(1);
+
+    const totalPages = computed(() =>
+      Math.ceil(currentEquipments.value.length / pageSize)
+    );
+
+    const displayEquipments = computed(() => {
+      const startIndex = (currentPage.value - 1) * pageSize;
+      const endIndex = startIndex + pageSize;
+      return currentEquipments.value.slice(startIndex, endIndex);
+    });
+
+    const nextPage = () => {
+      if (currentPage.value < totalPages.value) {
+        currentPage.value++;
+      }
+    };
+
+    const previousPage = () => {
+      if (currentPage.value > 1) {
+        currentPage.value--;
+      }
+    };
+    //pagination
     return {
       currentEquipments,
       eqpName,

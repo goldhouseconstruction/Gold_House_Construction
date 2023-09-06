@@ -1,18 +1,25 @@
 import db from "@/firebase/init";
-import { collection, getDocs, orderBy } from "firebase/firestore";
-import timeStamptoSting from "./timeStamptoString";
+import {
+  collection,
+  getDoc,
+  getDocs,
+  orderBy,
+  query,
+} from "firebase/firestore";
+import timeStamptoString from "./timeStamptoString";
 import { ref } from "vue";
 
 let fetchAllProjects = async (collectionName) => {
   let allDatas = ref([]);
-  const querySnapshot = await getDocs(
+  const q = query(
     collection(db, collectionName),
     orderBy("completed_date", "desc")
   );
+  const querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
     const completedDateTimestamp = doc.data().completed_date;
     const completedDate = completedDateTimestamp.toDate();
-    let formattedDate = timeStamptoSting(completedDate);
+    let formattedDate = timeStamptoString(completedDate);
 
     const ProjectData = {
       id: doc.id,
