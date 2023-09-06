@@ -178,12 +178,11 @@ import {
   deleteDoc,
   doc,
   getDoc,
-  getDocs,
-  orderBy,
   Timestamp,
   updateDoc,
 } from "firebase/firestore";
 import db from "../firebase/init";
+import fetchAllProjects from "../composables/fetchAllProjects";
 import { computed, onMounted, ref } from "vue";
 import timeStamptoSting from "@/composables/timeStamptoString";
 export default {
@@ -201,30 +200,8 @@ export default {
 
     //getAllEquipments
     onMounted(async () => {
-      const querySnapshot = await getDocs(
-        collection(db, "completed_projects"),
-        orderBy("completed_date", "desc")
-      );
-      querySnapshot.forEach((doc) => {
-        const completedDateTimestamp = doc.data().completed_date;
-        const completedDate = completedDateTimestamp.toDate();
-        let formattedDate = timeStamptoSting(completedDate);
-        // // Get year, month, and day
-        // const year = completedDate.getFullYear();
-        // const month = String(completedDate.getMonth() + 1).padStart(2, "0");
-        // const day = String(completedDate.getDate()).padStart(2, "0");
-
-        // // Format the date as yyyy-MM-dd
-        // const formattedDate = `${year}-${month}-${day}`;
-
-        const ProjectData = {
-          id: doc.id,
-          ...doc.data(),
-          completed_date: formattedDate,
-        };
-
-        currentProjects.value.push(ProjectData);
-      });
+      let allDatas = await fetchAllProjects("completed_projects");
+      currentProjects.value = allDatas;
     });
     let addProject = async () => {
       const formattedDate = new Date(completedDate.value);
