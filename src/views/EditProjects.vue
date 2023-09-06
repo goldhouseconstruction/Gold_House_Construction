@@ -200,9 +200,10 @@ export default {
 
     //getAllEquipments
     onMounted(async () => {
-      let allDatas = await fetchAllProjects("completed_projects");
-      currentProjects.value = allDatas;
+      let allDatas = await fetchAllProjects("completed_projects"); //fetch all projects with composable function
+      currentProjects.value = allDatas; //add to local array
     });
+    //add new equipments
     let addProject = async () => {
       const formattedDate = new Date(completedDate.value);
       const timestamp = Timestamp.fromDate(formattedDate);

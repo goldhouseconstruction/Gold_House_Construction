@@ -161,6 +161,7 @@ import {
 } from "firebase/firestore";
 import db from "../firebase/init";
 import fetchAllEquipments from "@/composables/fetchAllEquipments";
+import addNewEqp from "@/composables/addNewEqp";
 import { computed, onMounted, ref } from "vue";
 export default {
   setup() {
@@ -174,21 +175,17 @@ export default {
 
     //getAllEquipments
     onMounted(async () => {
-      let allDatas = await fetchAllEquipments("equipments");
-      currentEquipments.value = allDatas;
+      let allDatas = await fetchAllEquipments("equipments"); //fetch all equipments with composable function
+      currentEquipments.value = allDatas; //add to local array
     });
     let addEquipment = async () => {
-      const docRef = await addDoc(collection(db, "equipments"), {
+      let newEqpData = {
         eqpName: eqpName.value,
         description: description.value,
         imageUrl: imageUrl.value,
-      });
-      // Fetch the newly added equipment from Firestore using the docRef
-      const equipmentSnapshot = await getDoc(doc(db, "equipments", docRef.id));
-      const newEquipment = { id: docRef.id, ...equipmentSnapshot.data() };
-
-      // Update the local array currentEquipment with the new equipment
-      currentEquipments.value.push(newEquipment);
+      };
+      let newEquipment = await addNewEqp(newEqpData); // add new equipment with composable function
+      currentEquipments.value.push(newEquipment); // add new equipment to local array
 
       // Clear the input values after adding
       eqpName.value = "";
@@ -196,10 +193,12 @@ export default {
       imageUrl.value = "";
     };
 
+    //show confirm delete popup
     let confirmDelete = (id) => {
       edit_delete_id.value = id;
       showConfirmDelete.value = true;
     };
+    //delete function
     let deleteEqp = async () => {
       try {
         const eqpRef = doc(db, "equipments", edit_delete_id.value);
