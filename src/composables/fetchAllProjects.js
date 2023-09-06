@@ -34,3 +34,7 @@ let fetchAllProjects = async (collectionName) => {
 };
 
 export default fetchAllProjects;
+
+// while we use this composable function at some where, we have to assign this arrays object to variable directly like this
+// allcompletedProjects.value = allDatas;
+// because we returned whole array object(not like one per loop), so we can't use array push like this allcompletedProjects.value.push(allDatas)

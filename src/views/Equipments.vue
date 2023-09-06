@@ -31,17 +31,15 @@
 <script>
 import { onMounted, ref } from "vue";
 import { collection, getDocs } from "firebase/firestore";
+import fetchAllEquipments from "@/composables/fetchAllEquipments";
 import db from "../firebase/init";
 export default {
   setup() {
     let allEquipments = ref([]);
     //getAllEquipments
     onMounted(async () => {
-      const querySnapshot = await getDocs(collection(db, "equipments"));
-      querySnapshot.forEach((doc) => {
-        const EquipmentData = { id: doc.id, ...doc.data() };
-        allEquipments.value.push(EquipmentData);
-      });
+      let allDatas = await fetchAllEquipments("equipments"); //fetch all equipments with composable function
+      allEquipments.value = allDatas; //add to local array
     });
     return { allEquipments };
   },

@@ -45,8 +45,8 @@
 <script>
 import { computed, onMounted, ref } from "vue";
 import FilterNav from "../components/filterNav";
-import { collection, getDocs, orderBy } from "firebase/firestore";
-import db from "@/firebase/init";
+import fetchAllProjects from "@/composables/fetchAllProjects";
+
 export default {
   components: {
     FilterNav,
@@ -56,23 +56,8 @@ export default {
     let selectedCategory = ref("all");
     //getAllEquipments
     onMounted(async () => {
-      const querySnapshot = await getDocs(
-        collection(db, "completed_projects"),
-        orderBy("completed_date", "desc")
-      );
-      querySnapshot.forEach((doc) => {
-        //change time stamp to string
-        const completedDateTimestamp = doc.data().completed_date;
-        const completedDate = completedDateTimestamp.toDate();
-        const formattedDate = completedDate.toLocaleDateString("en-US");
-        //change time stamp to string
-        const ProjectData = {
-          id: doc.id,
-          ...doc.data(),
-          completed_date: formattedDate,
-        };
-        allcompletedProjects.value.push(ProjectData);
-      });
+      let allDatas = await fetchAllProjects("completed_projects"); //fetch all projects with composable function
+      allcompletedProjects.value = allDatas; //add to local array
     });
 
     //filter local, oversea
