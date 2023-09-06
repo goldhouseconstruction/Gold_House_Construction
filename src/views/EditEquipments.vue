@@ -162,6 +162,7 @@ import {
 import db from "../firebase/init";
 import fetchAllEquipments from "@/composables/fetchAllEquipments";
 import addNewEqp from "@/composables/addNewEqp";
+import pagination from "@/composables/pagination";
 import { computed, onMounted, ref } from "vue";
 export default {
   setup() {
@@ -257,32 +258,17 @@ export default {
       isEditForm.value = false;
     };
 
+    //Pagination
+    const {
+      pageSize,
+      currentPage,
+      totalPages,
+      displayDatas: displayEquipments,
+      nextPage,
+      previousPage,
+    } = pagination(currentEquipments);
     //pagination
-    const pageSize = 4;
-    const currentPage = ref(1);
 
-    const totalPages = computed(() =>
-      Math.ceil(currentEquipments.value.length / pageSize)
-    );
-
-    const displayEquipments = computed(() => {
-      const startIndex = (currentPage.value - 1) * pageSize;
-      const endIndex = startIndex + pageSize;
-      return currentEquipments.value.slice(startIndex, endIndex);
-    });
-
-    const nextPage = () => {
-      if (currentPage.value < totalPages.value) {
-        currentPage.value++;
-      }
-    };
-
-    const previousPage = () => {
-      if (currentPage.value > 1) {
-        currentPage.value--;
-      }
-    };
-    //pagination
     return {
       currentEquipments,
       eqpName,

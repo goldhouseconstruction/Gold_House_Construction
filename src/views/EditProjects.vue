@@ -184,6 +184,7 @@ import {
 import db from "../firebase/init";
 import fetchAllProjects from "../composables/fetchAllProjects";
 import addNewProject from "@/composables/addNewProject";
+import pagination from "@/composables/pagination";
 import { computed, onMounted, ref } from "vue";
 import timeStamptoSting from "@/composables/timeStamptoString";
 export default {
@@ -301,32 +302,17 @@ export default {
       isEditForm.value = false;
     };
 
+    //Pagination
+    const {
+      pageSize,
+      currentPage,
+      totalPages,
+      displayDatas: displayProjects,
+      nextPage,
+      previousPage,
+    } = pagination(currentProjects);
     //pagination
-    const pageSize = 4;
-    const currentPage = ref(1);
 
-    const totalPages = computed(() =>
-      Math.ceil(currentProjects.value.length / pageSize)
-    );
-
-    const displayProjects = computed(() => {
-      const startIndex = (currentPage.value - 1) * pageSize;
-      const endIndex = startIndex + pageSize;
-      return currentProjects.value.slice(startIndex, endIndex);
-    });
-
-    const nextPage = () => {
-      if (currentPage.value < totalPages.value) {
-        currentPage.value++;
-      }
-    };
-
-    const previousPage = () => {
-      if (currentPage.value > 1) {
-        currentPage.value--;
-      }
-    };
-    //pagination
     return {
       currentProjects,
       projectName,
