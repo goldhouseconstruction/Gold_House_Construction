@@ -98,6 +98,7 @@
               type="text"
               v-model="projectName"
               placeholder="Project Name"
+              required
             />
           </div>
           <div class="mb-4">
@@ -108,6 +109,7 @@
               rows="4"
               v-model="description"
               placeholder="Description"
+              required
             ></textarea>
           </div>
           <div class="mb-4">
@@ -118,6 +120,7 @@
               type="text"
               v-model="imageUrl"
               placeholder="Image URL"
+              required
             />
           </div>
           <div class="mb-4">
@@ -128,6 +131,7 @@
               type="text"
               v-model="location"
               placeholder="Project Location"
+              required
             />
           </div>
           <div class="mb-4">
@@ -140,6 +144,7 @@
               type="date"
               v-model="completedDate"
               placeholder="Project Completed Date"
+              required
             />
           </div>
           <div class="mb-4">

@@ -18,7 +18,7 @@
           v-model="password"
           class="formInput"
         />
-        <p v-if="error" class="err">{{ error }}</p>
+        <p v-if="errorMsg" class="err">{{ errorMsg }}</p>
         <button
           type="submit"
           class="mt-8 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
@@ -44,7 +44,7 @@ export default {
     let router = useRouter();
     let email = ref("");
     let password = ref("");
-    let error = ref("");
+    let errorMsg = ref("");
 
     //create account
     let signup = async () => {
@@ -52,7 +52,6 @@ export default {
       createUserWithEmailAndPassword(auth, email.value, password.value)
         .then((userCredential) => {
           const user = userCredential.user;
-          console.log(user);
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -62,22 +61,15 @@ export default {
 
     let login = async () => {
       const auth = getAuth();
-      signInWithEmailAndPassword(auth, email.value, password.value)
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          if (user) {
-            router.push("dashboard/clients");
-          }
-          // ...
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-        });
+      try {
+        await signInWithEmailAndPassword(auth, email.value, password.value);
+        router.push("/dashboard/clients");
+      } catch (error) {
+        errorMsg.value = error.code;
+      }
     };
 
-    return { email, password, error, login, signup };
+    return { email, password, errorMsg, login, signup };
   },
 };
 </script>

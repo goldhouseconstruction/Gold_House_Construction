@@ -105,6 +105,7 @@
               type="text"
               v-model="eqpName"
               placeholder="Equipment Name"
+              required
             />
           </div>
           <div class="mb-4">
@@ -115,6 +116,7 @@
               rows="4"
               v-model="description"
               placeholder="Description"
+              required
             ></textarea>
           </div>
           <div class="mb-4">
@@ -125,6 +127,7 @@
               type="text"
               v-model="imageUrl"
               placeholder="Image URL"
+              required
             />
           </div>
           <div class="flex items-center justify-between">
@@ -150,20 +153,12 @@
 </template>
 
 <script>
-import {
-  addDoc,
-  collection,
-  deleteDoc,
-  doc,
-  getDoc,
-  getDocs,
-  updateDoc,
-} from "firebase/firestore";
+import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import db from "../firebase/init";
 import fetchAllEquipments from "@/composables/fetchAllEquipments";
 import addNewEqp from "@/composables/addNewEqp";
 import pagination from "@/composables/pagination";
-import { computed, onMounted, ref } from "vue";
+import { onMounted, ref } from "vue";
 export default {
   setup() {
     let currentEquipments = ref([]);
