@@ -40,6 +40,7 @@
           name="email"
           v-model="email"
           class="w-full px-3 py-2 border rounded"
+          required
         />
 
         <label for="email" class="block mb-2">Write message to us:</label>
@@ -51,7 +52,7 @@
           id="message"
           cols="30"
         ></textarea>
-
+        <p class="text-red-500">{{ errmsg }}</p>
         <button
           type="submit"
           class="mt-8 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
@@ -101,6 +102,7 @@ export default {
     let email = ref("");
     let message = ref("");
     let showPopup = ref(false);
+    let errmsg = ref("");
 
     let saveClientMessage = async () => {
       try {
@@ -113,11 +115,11 @@ export default {
           email.value = "";
         }
       } catch (e) {
-        console.error("Error adding document: ", e);
+        errmsg.value = "Error sending message";
       }
     };
 
-    return { email, message, saveClientMessage, showPopup };
+    return { email, message, saveClientMessage, showPopup, errmsg };
   },
 };
 </script>

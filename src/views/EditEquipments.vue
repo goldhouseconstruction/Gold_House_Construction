@@ -17,6 +17,9 @@
               </tr>
             </thead>
             <tbody>
+              <!--  for error message -->
+              <p class="text-red-500 text-center">{{ errmsg }}</p>
+              <!--  for error message -->
               <tr
                 v-for="currentEquipment in displayEquipments"
                 :key="currentEquipment.id"
@@ -168,6 +171,7 @@ export default {
     let showConfirmDelete = ref(false);
     let isEditForm = ref(false);
     let edit_delete_id = ref("");
+    let errmsg = ref("asdff");
 
     //getAllEquipments
     onMounted(async () => {
@@ -205,7 +209,7 @@ export default {
         );
         showConfirmDelete.value = false;
       } catch (error) {
-        console.error("Error removing client:", error);
+        errmsg.value = error;
       }
     };
 
@@ -283,6 +287,7 @@ export default {
       confirmDelete,
       editEquipment,
       edit_delete_id,
+      errmsg,
     };
   },
 };

@@ -31,6 +31,7 @@
         </tbody>
       </table>
     </div>
+    <p class="text-red-500 text-center">{{ errmsg }}</p>
   </div>
 </template>
 
@@ -42,6 +43,7 @@ export default {
   name: "MessageTable",
   setup() {
     let clients = ref([]);
+    let errmsg = ref("");
     onMounted(async () => {
       const collectionRef = collection(db, "clients");
       const querySnapshot = await getDocs(collectionRef);
@@ -61,11 +63,11 @@ export default {
           (client) => client.id !== clientId
         );
       } catch (error) {
-        console.error("Error removing client:", error);
+        errmsg.value = error;
       }
     };
 
-    return { clients, removeClient };
+    return { clients, removeClient, errmsg };
   },
 };
 </script>

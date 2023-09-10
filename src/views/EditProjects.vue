@@ -17,6 +17,7 @@
               </tr>
             </thead>
             <tbody>
+              <p class="text-red-500 text-center">{{ errmsg }}</p>
               <tr
                 v-for="currentProject in displayProjects"
                 :key="currentProject.id"
@@ -177,15 +178,7 @@
 </template>
 
 <script>
-import {
-  addDoc,
-  collection,
-  deleteDoc,
-  doc,
-  getDoc,
-  Timestamp,
-  updateDoc,
-} from "firebase/firestore";
+import { deleteDoc, doc, Timestamp, updateDoc } from "firebase/firestore";
 import db from "../firebase/init";
 import fetchAllProjects from "../composables/fetchAllProjects";
 import addNewProject from "@/composables/addNewProject";
@@ -204,6 +197,7 @@ export default {
     let showConfirmDelete = ref(false);
     let isEditForm = ref(false);
     let edit_delete_id = ref("");
+    let errmsg = ref("");
 
     //getAllEquipments
     onMounted(async () => {
@@ -248,7 +242,7 @@ export default {
         );
         showConfirmDelete.value = false;
       } catch (error) {
-        console.error("Error removing client:", error);
+        errmsg.value = error;
       }
     };
 
@@ -339,6 +333,7 @@ export default {
       editProject,
       location,
       edit_delete_id,
+      errmsg,
     };
   },
 };
