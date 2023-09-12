@@ -176,7 +176,7 @@ export default {
     //getAllEquipments
     onMounted(async () => {
       let allDatas = await fetchAllEquipments("equipments"); //fetch all equipments with composable function
-      currentEquipments.value = allDatas; //add to local array
+      currentEquipments.value = allDatas; //add to local array.
     });
     //Add New Equipment
     let addEquipment = async () => {
